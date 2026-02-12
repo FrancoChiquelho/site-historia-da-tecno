@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentações | Protocolo de Projeção</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --zzz-yellow: #dbfd00;
+            --zzz-black: #0a0a0a;
+            --zzz-dark: #151515;
+            --zzz-white: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--zzz-black);
+            color: var(--zzz-white);
+            line-height: 1.6;
+        }
+
+        /* Linhas de scanline para efeito de monitor */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        header {
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 50px 10%;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+        }
+
+        header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 4.5rem;
+            text-transform: uppercase;
+            line-height: 0.9;
+        }
+
+        .tag-id {
+            background: var(--zzz-black);
+            color: var(--zzz-yellow);
+            display: inline-block;
+            padding: 2px 12px;
+            font-family: 'Teko';
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        main {
+            padding: 60px 10%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.8rem;
+            color: var(--zzz-yellow);
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            border-left: 8px solid var(--zzz-yellow);
+            padding-left: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        /* Grid de Dicas de Design */
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .design-card {
+            background: var(--zzz-dark);
+            border: 1px solid #333;
+            padding: 30px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .design-card:hover {
+            border-color: var(--zzz-yellow);
+            transform: translateY(-5px);
+        }
+
+        .design-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--zzz-yellow);
+        }
+
+        .number-bg {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-family: 'Teko';
+            font-size: 3rem;
+            color: rgba(255,255,255,0.05);
+            font-weight: 800;
+        }
+
+        /* Lista de Boas Práticas */
+        .best-practices {
+            background: var(--zzz-white);
+            color: var(--zzz-black);
+            padding: 40px;
+            clip-path: polygon(2% 0%, 100% 0%, 98% 100%, 0% 100%);
+            margin: 40px 0;
+        }
+
+        .best-practices h3 {
+            font-family: 'Teko';
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .best-practices ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .best-practices li {
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .best-practices li::before {
+            content: "✔";
+            color: #00aa00;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 15px 45px;
+            text-decoration: none;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.6rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            filter: brightness(1.2);
+            padding-left: 60px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="tag-id">VISUAL_OUTPUT // MODULE_07</div>
+    <h1>Técnicas de Apresentação</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Comunicação Visual Eficaz</h2>
+        <p>A criação de <strong>apresentações de diapositivos</strong> (slides) é uma competência essencial para transmitir ideias, relatórios e projetos. Mais do que apenas colocar texto num ecrã, uma boa apresentação deve servir de suporte visual ao orador, mantendo o público focado e interessado.</p>
+        
+        <div class="design-grid">
+            <div class="design-card">
+                <div class="number-bg">01</div>
+                <h3>Estrutura Lógica</h3>
+                <p>Cada apresentação deve ter uma narrativa: Introdução (o quê), Desenvolvimento (os factos) e Conclusão (o resumo e próximos passos).</p>
+            </div>
+
+            <div class="design-card">
+                <div class="number-bg">02</div>
+                <h3>Design e Cores</h3>
+                <p>Utiliza paletas de cores com alto contraste (como este site!) para garantir a legibilidade. Evita fundos muito claros com letras claras.</p>
+            </div>
+
+            <div class="design-card">
+                <div class="number-bg">03</div>
+                <h3>Multimédia</h3>
+                <p>Gráficos, ícones e vídeos ajudam a quebrar a monotonia do texto e explicam conceitos complexos de forma instantânea.</p>
+            </div>
+
+            <div class="design-card">
+                <div class="number-bg">04</div>
+                <h3>Animações</h3>
+                <p>Usa transições de forma subtil. O objetivo é guiar o olhar do espetador, não distraí-lo com movimentos excessivos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="best-practices">
+            <h3>Boas Práticas de "Ouro"</h3>
+            <ul>
+                <li>Máximo de 6 linhas de texto por diapositivo.</li>
+                <li>Usa imagens de alta qualidade (HD).</li>
+                <li>Mantém a consistência de fontes em todos os slides.</li>
+                <li>Não leias diretamente o que está escrito no slide.</li>
+                <li>Menos é mais: Evita a poluição visual.</li>
+                <li>Usa esquemas de cores profissionais (Canva, SlidesGo).</li>
+            </ul>
+        </div>
+
+        <h2>Softwares de Referência</h2>
+        <p>Existem várias ferramentas para este fim, desde o clássico <strong>Microsoft PowerPoint</strong>, ao dinâmico <strong>Prezi</strong>, passando pelo colaborativo <strong>Google Slides</strong> e o moderno <strong>Canva Presentations</strong>.</p>
+    </section>
+
+    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+</main>
+
+<footer>
+    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
+        SISTEMA DE PROJEÇÃO // PROJECT_V_07
+    </div>
+</footer>
+
+</body>
+</html>

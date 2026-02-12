@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramentas Informáticas | Protocolo de Arsenal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --zzz-yellow: #dbfd00;
+            --zzz-black: #0a0a0a;
+            --zzz-dark-grey: #1a1a1a;
+            --zzz-grey: #2a2a2a;
+            --zzz-white: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--zzz-black);
+            color: var(--zzz-white);
+            line-height: 1.6;
+        }
+
+        /* Scanlines e Grid de Fundo */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        header {
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 50px 10%;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 97% 100%, 0 100%);
+        }
+
+        header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .category-tag {
+            background: var(--zzz-black);
+            color: var(--zzz-yellow);
+            display: inline-block;
+            padding: 2px 10px;
+            font-family: 'Teko';
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        main {
+            padding: 60px 10%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section { margin-bottom: 80px; }
+
+        h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.8rem;
+            color: var(--zzz-yellow);
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--zzz-grey);
+            margin-bottom: 30px;
+        }
+
+        /* Grid de Ferramentas */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: var(--zzz-dark-grey);
+            padding: 25px;
+            border-left: 5px solid var(--zzz-grey);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card:hover {
+            border-left-color: var(--zzz-yellow);
+            background: #222;
+            transform: translateY(-5px);
+        }
+
+        .tool-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--zzz-white);
+        }
+
+        .tool-card ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .tool-card li {
+            font-size: 0.9rem;
+            color: var(--zzz-yellow);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tool-card li::before {
+            content: ">";
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: white;
+            color: black;
+            padding: 30px;
+            margin-top: 40px;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            text-align: center;
+        }
+
+        .info-box h4 {
+            font-family: 'Teko';
+            font-size: 2rem;
+            text-transform: uppercase;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 50px;
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 15px 40px;
+            text-decoration: none;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
+        }
+
+        .back-btn:hover {
+            filter: brightness(1.1);
+            padding-left: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="category-tag">EQUIPAMENTO_DE_SISTEMA // VER_2.0</div>
+    <h1>02. Ferramentas Informáticas</h1>
+</header>
+
+<main>
+    <section>
+        <h2>O Arsenal Digital</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 40px; color: #aaa;">
+            Para dominar o ambiente digital, um utilizador necessita de um conjunto específico de ferramentas. Estas não são apenas programas; são extensões da nossa capacidade de processar, organizar e comunicar informação de forma eficiente.
+        </p>
+
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>Processadores de Texto</h3>
+                <p>O pilar da documentação. Essenciais para criar, editar e formatar relatórios ou trabalhos académicos.</p>
+                <ul>
+                    <li>Microsoft Word (Padrão Industrial)</li>
+                    <li>LibreOffice Writer (Open Source)</li>
+                    <li>Google Docs (Nuvem/Colaborativo)</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <h3>Folhas de Cálculo</h3>
+                <p>Ferramentas de análise numérica e organização de dados através de fórmulas e tabelas dinâmicas.</p>
+                <ul>
+                    <li>Microsoft Excel (Poder de Processamento)</li>
+                    <li>Google Sheets (Partilha em Tempo Real)</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <h3>Software de Apresentação</h3>
+                <p>Utilizados para comunicar ideias de forma visual e impactante através de diapositivos.</p>
+                <ul>
+                    <li>Microsoft PowerPoint</li>
+                    <li>Prezi (Dinâmico)</li>
+                    <li>Canva (Design Moderno)</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <h3>Navegadores (Browsers)</h3>
+                <p>A tua janela para a rede mundial. Interpretam código HTML/CSS para exibir conteúdos online.</p>
+                <ul>
+                    <li>Google Chrome (Velocidade)</li>
+                    <li>Mozilla Firefox (Privacidade)</li>
+                    <li>Microsoft Edge (Integração)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section>
+        <h2>A Importância da Ótica do Utilizador</h2>
+        <p>Dominar estas ferramentas na <strong>ótica do utilizador</strong> significa ser capaz de operar o software de forma produtiva, sem necessariamente conhecer a programação por trás dele. No mercado de trabalho atual, este conhecimento não é um bónus, mas sim um requisito mínimo de sobrevivência.</p>
+        
+        <div class="info-box">
+            <h4>Dica de Produtividade</h4>
+            <p>A utilização de <strong>Atalhos de Teclado</strong> (como Ctrl+C / Ctrl+V) pode aumentar a tua velocidade de trabalho em até 30%. Domina as teclas, domina o sistema.</p>
+        </div>
+    </section>
+
+    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+</main>
+
+<footer>
+    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
+        SISTEMA DE ARQUIVO // REGISTO_FERRAMENTAS_INFO
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folhas de Cálculo | Análise de Matrizes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --zzz-yellow: #dbfd00;
+            --zzz-black: #0a0a0a;
+            --zzz-dark: #151515;
+            --zzz-white: #ffffff;
+            --zzz-grid: #2a2a2a;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--zzz-black);
+            color: var(--zzz-white);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 50px 10%;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+            border-bottom: 5px solid var(--zzz-white);
+        }
+
+        header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 4.5rem;
+            text-transform: uppercase;
+        }
+
+        .data-status {
+            font-family: 'Teko';
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        main {
+            padding: 60px 10%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.8rem;
+            color: var(--zzz-yellow);
+            text-transform: uppercase;
+            margin: 40px 0 20px;
+        }
+
+        /* Tabela Estilizada */
+        .zzz-table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+            border: 2px solid var(--zzz-grid);
+        }
+
+        .zzz-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--zzz-dark);
+        }
+
+        .zzz-table th {
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            font-family: 'Teko';
+            font-size: 1.4rem;
+            padding: 15px;
+            text-align: left;
+            text-transform: uppercase;
+        }
+
+        .zzz-table td {
+            padding: 12px 15px;
+            border: 1px solid var(--zzz-grid);
+            font-size: 0.95rem;
+        }
+
+        .zzz-table tr:hover {
+            background: #222;
+        }
+
+        /* Cards de Funções */
+        .function-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .function-card {
+            background: #1a1a1a;
+            padding: 25px;
+            border-left: 4px solid var(--zzz-yellow);
+            position: relative;
+        }
+
+        .function-card code {
+            display: block;
+            background: #000;
+            color: var(--zzz-yellow);
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 50px;
+            background: var(--zzz-white);
+            color: var(--zzz-black);
+            padding: 15px 45px;
+            text-decoration: none;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.6rem;
+            font-weight: bold;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+
+        .back-btn:hover { background: var(--zzz-yellow); }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="data-status">ANALYSIS_MODE // CELL_REGRID_ACTIVE</div>
+    <h1>Folhas de Cálculo</h1>
+</header>
+
+<main>
+    <section>
+        <h2>A Matriz de Dados</h2>
+        <p>As <strong>Folhas de Cálculo</strong> são ferramentas concebidas para manipular números e dados em grelhas. Elas permitem automatizar cálculos complexos, organizar inventários e gerar visualizações estatísticas através de fórmulas e funções dinâmicas.</p>
+        
+        <div class="zzz-table-container">
+            <table class="zzz-table">
+                <thead>
+                    <tr>
+                        <th>Conceito</th>
+                        <th>Definição Operacional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Célula</strong></td>
+                        <td>A unidade básica onde os dados são inseridos (interseção de uma linha e uma coluna).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Referência</strong></td>
+                        <td>O "endereço" de uma célula (ex: A1, B10).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fórmula</strong></td>
+                        <td>Uma instrução que começa sempre com o sinal "=" para realizar um cálculo.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Intervalo</strong></td>
+                        <td>Um conjunto de células selecionadas (ex: A1:A10).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    
+
+    <section>
+        <h2>Funções de Comando</h2>
+        <p>As funções são fórmulas pré-programadas que executam tarefas específicas de forma rápida. Aqui estão as mais utilizadas em protocolos de análise:</p>
+        
+        <div class="function-grid">
+            <div class="function-card">
+                <code>=SOMA(A1:A10)</code>
+                <p>Adiciona todos os valores numéricos no intervalo selecionado.</p>
+            </div>
+            <div class="function-card">
+                <code>=MÉDIA(B1:B20)</code>
+                <p>Calcula o valor médio aritmético dos dados inseridos.</p>
+            </div>
+            <div class="function-card">
+                <code>=SE(C1>10; "OK"; "ERRO")</code>
+                <p>Uma função lógica que testa uma condição e retorna resultados diferentes.</p>
+            </div>
+            <div class="function-card">
+                <code>=CONT.VALORES(D1:D50)</code>
+                <p>Conta quantas células no intervalo contêm informação (texto ou números).</p>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section>
+        <h2>Visualização e Gráficos</h2>
+        <p>Uma das maiores vantagens desta ferramenta é a capacidade de transformar tabelas áridas em <strong>Gráficos</strong> (barras, linhas, circulares). Isto facilita a interpretação imediata de tendências e padrões, essencial para qualquer relatório de missão de alto nível.</p>
+        
+        <p><strong>Softwares Principais:</strong> Microsoft Excel (profissional), Google Sheets (nuvem/colaborativo) e LibreOffice Calc (open-source).</p>
+    </section>
+
+    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+</main>
+
+<footer>
+    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
+        MATRIX_CALC_DONE // SYSTEM_STABLE
+    </div>
+</footer>
+
+</body>
+</html>

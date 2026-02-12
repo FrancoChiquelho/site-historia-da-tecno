@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armazenamento | Gestão de Memória</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --zzz-yellow: #dbfd00;
+            --zzz-black: #0a0a0a;
+            --zzz-dark: #121212;
+            --zzz-white: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--zzz-black);
+            color: var(--zzz-white);
+            line-height: 1.6;
+        }
+
+        /* Efeito de scanline */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 3px;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        header {
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 50px 10%;
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 98% 100%, 0 100%);
+        }
+
+        header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 4.5rem;
+            text-transform: uppercase;
+            line-height: 0.8;
+        }
+
+        .status-bar {
+            font-family: 'Teko';
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        main {
+            padding: 60px 10%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.8rem;
+            color: var(--zzz-yellow);
+            text-transform: uppercase;
+            margin: 40px 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::after {
+            content: "";
+            height: 2px;
+            background: #333;
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        /* Container de Unidades de Medida */
+        .units-box {
+            background: #1a1a1a;
+            border: 2px solid var(--zzz-yellow);
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .unit-item {
+            border-right: 1px solid #333;
+        }
+
+        .unit-item:last-child { border: none; }
+
+        .unit-item span {
+            display: block;
+            font-family: 'Teko';
+            font-size: 2rem;
+            color: var(--zzz-yellow);
+        }
+
+        /* Cards de Hardware de Armazenamento */
+        .storage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .storage-card {
+            background: white;
+            color: black;
+            padding: 30px;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+            transition: 0.3s;
+        }
+
+        .storage-card:hover {
+            transform: translateY(-10px);
+            background: var(--zzz-yellow);
+        }
+
+        .storage-card h3 {
+            font-family: 'Teko';
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        /* Backup Alert Section */
+        .backup-section {
+            background: #ff4545;
+            color: white;
+            padding: 30px;
+            margin: 50px 0;
+            text-transform: uppercase;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            clip-path: polygon(2% 0%, 100% 0%, 98% 100%, 0% 100%);
+        }
+
+        .backup-section i { font-size: 3rem; }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            background: var(--zzz-white);
+            color: var(--zzz-black);
+            padding: 15px 45px;
+            text-decoration: none;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.6rem;
+            font-weight: bold;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+
+        .back-btn:hover { background: var(--zzz-yellow); }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="status-bar">SISTEMA DE DADOS // CAPACIDADE_MAX</div>
+    <h1>08. Armazenamento</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Unidades de Medida Digital</h2>
+        <p>Para entender o armazenamento, precisamos de saber como a informação é medida. Tudo começa com o <strong>Bit</strong> (0 ou 1), mas no dia a dia usamos unidades maiores:</p>
+        
+        <div class="units-box">
+            <div class="unit-item"><span>1 KB</span>Kilobyte</div>
+            <div class="unit-item"><span>1 MB</span>Megabyte</div>
+            <div class="unit-item"><span>1 GB</span>Gigabyte</div>
+            <div class="unit-item"><span>1 TB</span>Terabyte</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Meios de Armazenamento</h2>
+        <div class="storage-grid">
+            <div class="storage-card">
+                <h3>SSD (Sólido)</h3>
+                <p>A tecnologia mais rápida atualmente. Não tem peças móveis, o que o torna resistente e extremamente veloz a carregar o Sistema Operativo e jogos.</p>
+            </div>
+            <div class="storage-card">
+                <h3>HDD (Rígido)</h3>
+                <p>O disco tradicional. Usa pratos magnéticos que giram. É mais lento que o SSD, mas oferece muito mais espaço por um preço menor.</p>
+            </div>
+            <div class="storage-card">
+                <h3>Cloud (Nuvem)</h3>
+                <p>Armazenamento em servidores remotos acessíveis pela Internet. Exemplos: Google Drive, OneDrive e iCloud. Permite aceder aos ficheiros em qualquer lugar.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="backup-section">
+        <div style="font-size: 3rem;">⚠</div>
+        <div>
+            <strong>Regra de Ouro do Backup:</strong>
+            Quem tem apenas uma cópia, não tem nenhuma. Mantém sempre os teus dados importantes em pelo menos dois locais diferentes (ex: PC + Nuvem).
+        </div>
+    </div>
+
+    <section>
+        <h2>Segurança e Manutenção</h2>
+        <p>O armazenamento não é eterno. Discos rígidos podem falhar mecanicamente e SSDs têm um ciclo de vida de escrita. É fundamental monitorizar a "saúde" dos discos e evitar movimentos bruscos em computadores portáteis enquanto o HDD está a ler dados.</p>
+    </section>
+
+    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+</main>
+
+<footer>
+    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
+        DATA_STORAGE_V2 // ACERVO_DIGITAL
+    </div>
+</footer>
+
+</body>
+</html>

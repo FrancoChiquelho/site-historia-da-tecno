@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processamento de Texto | Protocolo de Edição</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --zzz-yellow: #dbfd00;
+            --zzz-black: #0a0a0a;
+            --zzz-dark: #111;
+            --zzz-white: #ffffff;
+            --zzz-red: #ff3e3e;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--zzz-black);
+            color: var(--zzz-white);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--zzz-black);
+            color: var(--zzz-yellow);
+            padding: 50px 10%;
+            border-bottom: 5px solid var(--zzz-yellow);
+            position: relative;
+        }
+
+        header::after {
+            content: "DOC_PROCESSOR_V2";
+            position: absolute;
+            bottom: 10px;
+            right: 10%;
+            font-family: 'Teko';
+            font-size: 1.2rem;
+            opacity: 0.5;
+        }
+
+        header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 4.5rem;
+            text-transform: uppercase;
+        }
+
+        main {
+            padding: 60px 10%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: 3rem;
+            color: var(--zzz-yellow);
+            text-transform: uppercase;
+            margin: 40px 0 20px;
+        }
+
+        /* Grid de Ferramentas de Formatação */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-box {
+            background: var(--zzz-dark);
+            border: 1px solid #333;
+            padding: 25px;
+            transition: 0.3s;
+        }
+
+        .tool-box:hover {
+            border-color: var(--zzz-yellow);
+            background: #1a1a1a;
+        }
+
+        .tool-box h3 {
+            font-family: 'Teko';
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-box h3::before {
+            content: "";
+            width: 10px;
+            height: 20px;
+            background: var(--zzz-yellow);
+        }
+
+        /* Secção de Boas Práticas */
+        .format-rules {
+            background: var(--zzz-white);
+            color: var(--zzz-black);
+            padding: 40px;
+            margin: 50px 0;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%);
+        }
+
+        .format-rules h3 {
+            font-family: 'Teko';
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: var(--zzz-red);
+        }
+
+        .rule-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .rule-item strong { text-transform: uppercase; }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 15px 45px;
+            text-decoration: none;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.6rem;
+            font-weight: bold;
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+        }
+
+        .back-btn:hover { background: var(--zzz-white); }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Processamento de Texto</h1>
+</header>
+
+<main>
+    <section>
+        <h2>A Arte da Edição Digital</h2>
+        <p>O <strong>Processamento de Texto</strong> não é apenas escrever; é organizar ideias de forma visual e estruturada. Através destas ferramentas, podemos transformar rascunhos em documentos profissionais, relatórios técnicos ou guiões de missão.</p>
+        
+        <div class="tools-grid">
+            <div class="tool-box">
+                <h3>Formatação de Caracteres</h3>
+                <p>Ajuste de fontes (tipos de letra), tamanhos, cores e estilos como <strong>Negrito</strong>, <em>Itálico</em> e <u>Sublinhado</u> para criar hierarquia visual.</p>
+            </div>
+            <div class="tool-box">
+                <h3>Edição de Parágrafos</h3>
+                <p>Controlo de alinhamentos (Esquerda, Direita, Centrado e Justificado), espaçamentos entre linhas e avanços de texto.</p>
+            </div>
+            <div class="tool-box">
+                <h3>Estruturação Automática</h3>
+                <p>Criação de listas numeradas, marcas (bullet points) e índices automáticos baseados em estilos de título.</p>
+            </div>
+            <div class="tool-box">
+                <h3>Inserção de Objetos</h3>
+                <p>Capacidade de incluir imagens, formas, tabelas e gráficos que complementam a informação textual.</p>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section>
+        <div class="format-rules">
+            <h3>Protocolos de Rigor Editorial</h3>
+            <div class="rule-item">
+                <strong>Revisão Ortográfica:</strong> Nunca ignores as marcas vermelhas do sistema. Um documento com erros perde toda a autoridade.
+            </div>
+            <div class="rule-item">
+                <strong>Estilos de Título:</strong> Usa "Título 1", "Título 2", etc. Isto permite que o software gere índices automáticos instantaneamente.
+            </div>
+            <div class="rule-item">
+                <strong>Exportação (PDF):</strong> Para garantir que o formato não se altera em outros computadores, exporta sempre o ficheiro final em formato PDF.
+            </div>
+            <div class="rule-item">
+                <strong>Consistência:</strong> Não uses mais do que 2 ou 3 tipos de letra diferentes no mesmo documento para manter um aspeto limpo.
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Software de Elite</h2>
+        <p>Embora o <strong>Microsoft Word</strong> seja o padrão da indústria, existem alternativas poderosas como o <strong>Google Docs</strong> (para trabalho colaborativo em tempo real) e o <strong>LibreOffice Writer</strong> (uma excelente opção gratuita e de código aberto).</p>
+    </section>
+
+    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+</main>
+
+<footer>
+    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
+        DOCUMENT_SYNC_COMPLETE // SYSTEM_OFFLINE
+    </div>
+</footer>
+
+</body>
+</html>

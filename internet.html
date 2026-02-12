@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internet | Protocolo de Navegação</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --zzz-yellow: #dbfd00;
+            --zzz-black: #0a0a0a;
+            --zzz-dark: #111111;
+            --zzz-blue: #00e5ff;
+            --zzz-white: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--zzz-black);
+            color: var(--zzz-white);
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 2px 2px, #222 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        header {
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 50px 10%;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%, 0 70%);
+            border-bottom: 5px solid var(--zzz-white);
+        }
+
+        header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 4.5rem;
+            text-transform: uppercase;
+            line-height: 0.8;
+        }
+
+        .network-status {
+            font-family: 'Teko';
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .dot { height: 12px; width: 12px; background-color: #000; border-radius: 50%; display: inline-block; animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        main {
+            padding: 60px 10%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.8rem;
+            color: var(--zzz-yellow);
+            text-transform: uppercase;
+            margin: 40px 0 20px;
+        }
+
+        /* Conceitos da Web */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .concept-card {
+            background: var(--zzz-dark);
+            border: 1px solid #333;
+            padding: 25px;
+            position: relative;
+        }
+
+        .concept-card::before {
+            content: "PROTO_DATA";
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: #333;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            font-family: 'Teko';
+        }
+
+        .concept-card h3 {
+            font-family: 'Teko';
+            font-size: 2rem;
+            color: var(--zzz-blue);
+            margin-bottom: 10px;
+        }
+
+        /* Dicas de Cibersegurança */
+        .security-box {
+            background: var(--zzz-white);
+            color: var(--zzz-black);
+            padding: 40px;
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .security-box h3 {
+            font-family: 'Teko';
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            border-bottom: 4px solid var(--zzz-black);
+            margin-bottom: 20px;
+        }
+
+        .security-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .security-list li {
+            font-weight: 700;
+            padding: 10px;
+            border-left: 5px solid var(--zzz-black);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 15px 45px;
+            text-decoration: none;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.6rem;
+            font-weight: bold;
+            clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
+        }
+
+        .back-btn:hover { background: var(--zzz-white); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="network-status"><span class="dot"></span> LIGAÇÃO ESTABELECIDA // SINAL_ESTÁVEL</div>
+    <h1>09. Utilização da Internet</h1>
+</header>
+
+<main>
+    <section>
+        <h2>A Rede Mundial</h2>
+        <p>A <strong>Internet</strong> é uma infraestrutura global de redes de computadores interligadas que comunicam entre si através de protocolos específicos (TCP/IP). É a base da sociedade de informação moderna, permitindo a partilha instantânea de dados em qualquer parte do planeta.</p>
+        
+        <div class="concept-grid">
+            <div class="concept-card">
+                <h3>Browsers vs Motores de Busca</h3>
+                <p>O <strong>Browser</strong> (como o Chrome ou Edge) é o programa que usas para abrir sites. O <strong>Motor de Busca</strong> (como o Google ou DuckDuckGo) é um site que te ajuda a encontrar informação dentro da web.</p>
+            </div>
+            <div class="concept-card">
+                <h3>WWW vs Internet</h3>
+                <p>A Internet é a "estrada" (cabos, satélites). A <strong>World Wide Web</strong> (WWW) é apenas um dos serviços que corre nessa estrada, tal como o Email ou o Gaming Online.</p>
+            </div>
+            <div class="concept-card">
+                <h3>O Protocolo HTTPS</h3>
+                <p>O "S" significa <strong>Seguro</strong>. Indica que a comunicação entre o teu computador e o servidor está encriptada, impedindo que terceiros roubem os teus dados.</p>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section>
+        <div class="security-box">
+            <h3>Protocolo de Cibersegurança</h3>
+            <p style="color: #000; margin-bottom: 20px; font-weight: 600;">Para navegar sem riscos, um "Proxy" deve seguir estas diretrizes:</p>
+            <ul class="security-list">
+                <li>Utilizar Palavras-passe fortes e únicas.</li>
+                <li>Ativar a Autenticação de Dois Fatores (2FA).</li>
+                <li>Desconfiar de links em mensagens não solicitadas (Phishing).</li>
+                <li>Manter o Browser e o Sistema Operativo atualizados.</li>
+                <li>Evitar redes Wi-Fi públicas para transações bancárias.</li>
+                <li>Verificar sempre se o cadeado do HTTPS está ativo.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>A Pegada Digital</h2>
+        <p>Tudo o que fazemos online deixa um rasto. Desde as pesquisas que fazemos até às fotos que partilhamos, a nossa <strong>Pegada Digital</strong> define a nossa reputação online. Ser um utilizador responsável implica pensar criticamente antes de publicar e respeitar a privacidade alheia.</p>
+    </section>
+
+    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+</main>
+
+<footer>
+    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
+        GLOBAL_NET_SYNC // ACESSO_NÍVEL_09
+    </div>
+</footer>
+
+</body>
+</html>

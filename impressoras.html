@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressoras | Unidade de Output Físico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --zzz-yellow: #dbfd00;
+            --zzz-black: #0a0a0a;
+            --zzz-dark: #1a1a1a;
+            --zzz-white: #ffffff;
+            --zzz-grey: #333;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--zzz-black);
+            color: var(--zzz-white);
+            line-height: 1.6;
+        }
+
+        /* Efeito de grelha de fundo */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(219, 253, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(219, 253, 0, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        header {
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 50px 10%;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 5% 100%, 0 80%);
+        }
+
+        header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 4.5rem;
+            text-transform: uppercase;
+            line-height: 0.8;
+        }
+
+        .module-id {
+            font-family: 'Teko';
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+        }
+
+        main {
+            padding: 60px 10%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.8rem;
+            color: var(--zzz-yellow);
+            text-transform: uppercase;
+            margin: 40px 0 20px;
+            border-bottom: 2px solid var(--zzz-grey);
+        }
+
+        /* Tipos de Impressoras Grid */
+        .printer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .printer-card {
+            background: var(--zzz-dark);
+            border: 1px solid #444;
+            padding: 30px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .printer-card:hover {
+            border-color: var(--zzz-yellow);
+            transform: scale(1.02);
+        }
+
+        .printer-card h3 {
+            font-family: 'Teko';
+            font-size: 2rem;
+            color: var(--zzz-yellow);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        /* Manuseamento e Avisos */
+        .maintenance-protocol {
+            background: var(--zzz-white);
+            color: var(--zzz-black);
+            padding: 40px;
+            margin: 40px 0;
+            clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 0 100%);
+        }
+
+        .maintenance-protocol h3 {
+            font-family: 'Teko';
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .protocol-list {
+            list-style: none;
+        }
+
+        .protocol-list li {
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .protocol-list li::before {
+            content: "■";
+            color: var(--zzz-yellow);
+            background: black;
+            padding: 0 5px;
+        }
+
+        .warning-jam {
+            background: #ff4545;
+            color: white;
+            padding: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-align: center;
+            margin-top: 30px;
+            border: 4px solid black;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            background: var(--zzz-white);
+            color: var(--zzz-black);
+            padding: 15px 45px;
+            text-decoration: none;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.6rem;
+            font-weight: bold;
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+        }
+
+        .back-btn:hover { background: var(--zzz-yellow); }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="module-id">HARDWARE_OUTPUT // UNID_11</div>
+    <h1>Manuseamento de Impressoras</h1>
+</header>
+
+<main>
+    <section>
+        <h2>O Salto do Digital para o Físico</h2>
+        <p>A impressora é um periférico de saída que permite traduzir dados digitais em suporte físico (geralmente papel). Dependendo do volume de trabalho e da qualidade pretendida, existem diferentes tecnologias disponíveis.</p>
+        
+        <div class="printer-grid">
+            <div class="printer-card">
+                <h3>Jato de Tinta (Inkjet)</h3>
+                <p>Ideal para uso doméstico e fotografias. Funciona através da ejeção de minúsculas gotas de tinta líquida de tinteiros (CMYK) para o papel.</p>
+            </div>
+            <div class="printer-card">
+                <h3>Laser</h3>
+                <p>Utilizada em escritórios pelo seu baixo custo por página e alta velocidade. Utiliza um pó fino chamado <strong>Toner</strong> que é fixado ao papel através de calor.</p>
+            </div>
+            <div class="printer-card">
+                <h3>Térmica</h3>
+                <p>Muito comum em talões de supermercado e etiquetas. Não usa tinta, mas sim calor sobre um papel especial que reage à temperatura.</p>
+            </div>
+            <div class="printer-card">
+                <h3>Impressoras 3D</h3>
+                <p>A fronteira moderna. "Imprimem" objetos tridimensionais camada por camada, utilizando filamentos de plástico ou resina.</p>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section>
+        <div class="maintenance-protocol">
+            <h3>Protocolo de Manutenção</h3>
+            <ul class="protocol-list">
+                <li>Verificar níveis de Tinteiro/Toner antes de grandes trabalhos.</li>
+                <li>Utilizar papel com a gramagem correta para evitar danos no rolo.</li>
+                <li>Realizar ciclos de limpeza de cabeçotes se a impressão falhar.</li>
+                <li>Manter a impressora num local livre de humidade excessiva.</li>
+            </ul>
+
+            <div class="warning-jam">
+                ⚠ ALERTA DE ENCRAVAMENTO: Nunca puxes o papel com força bruta. Segue sempre as instruções do painel para libertar os rolos.
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section>
+        <h2>Conectividade</h2>
+        <p>As impressoras modernas operam através de várias interfaces. Enquanto o <strong>USB</strong> é o padrão para ligação direta, as impressoras de rede (via <strong>Wi-Fi</strong> ou <strong>Ethernet</strong>) permitem que múltiplos utilizadores imprimam a partir de qualquer dispositivo, incluindo smartphones.</p>
+    </section>
+
+    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+</main>
+
+<footer>
+    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
+        PRINT_TERMINAL_V1 // HARDWARE_SYNC
+    </div>
+</footer>
+
+</body>
+</html>

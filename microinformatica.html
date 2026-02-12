@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microinformática // Ficheiro de Dados 01</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* =================== CONFIGURAÇÃO BASE (IGUAL AO INDEX) =================== */
+        :root {
+            --zzz-yellow: #dbfd00;
+            --zzz-black: #0a0a0a;
+            --zzz-dark-grey: #141414;
+            --zzz-grey: #2b2b2b;
+            --zzz-white: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--zzz-white);
+            background-color: #050505;
+            overflow-x: hidden;
+            /* Padrão de fundo técnico do Index */
+            background-image: 
+                linear-gradient(rgba(10,10,10,0.9), rgba(10,10,10,0.9)),
+                repeating-linear-gradient(45deg, #151515 0, #151515 1px, transparent 0, transparent 50%);
+            background-size: 20px 20px;
+            line-height: 1.6;
+        }
+
+        /* Efeito de Scanlines (Igual ao Index) */
+        body::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
+            background-size: 100% 3px;
+            z-index: 9990;
+            pointer-events: none;
+        }
+
+        /* =================== ANIMAÇÕES =================== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes text-glitch {
+            0% { transform: skewX(0deg); }
+            20% { transform: skewX(-15deg) translate(-5px, 2px); text-shadow: 3px 0 0 red, -3px 0 0 cyan; }
+            40% { transform: skewX(5deg) translate(5px, -2px); text-shadow: -3px 0 0 red, 3px 0 0 blue; }
+            60% { transform: skewX(-5deg) translate(-2px, 5px); }
+            80% { transform: skewX(2deg) translate(2px, -2px); }
+            100% { transform: skewX(0deg); }
+        }
+
+        /* =================== HEADER DE FICHEIRO =================== */
+        .file-header {
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 40px 5% 80px 5%; /* Padding extra em baixo para o recorte */
+            position: relative;
+            /* Recorte angular agressivo na base */
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 70% 100%, 0 95%);
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .file-meta {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .file-header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 5rem;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin: 0;
+            font-weight: 700;
+            /* Efeito Glitch na entrada */
+            animation: text-glitch 0.6s steps(8) 0.3s backwards;
+        }
+        
+        .file-path {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+
+        /* =================== HERO IMAGE DO TÓPICO =================== */
+        .topic-hero-container {
+            max-width: 1200px;
+            margin: -60px auto 60px auto; /* Puxa para cima para sobrepor o header */
+            padding: 0 5%;
+            position: relative;
+            z-index: 10;
+            animation: fadeUp 1s ease-out 0.5s backwards;
+        }
+
+        .topic-hero {
+            height: 400px;
+            background: url('https://jornalismodigitaletecnologia.wordpress.com/wp-content/uploads/2015/05/home1.png') center/cover;
+            position: relative;
+            /* Moldura técnica amarela */
+            border: 3px solid var(--zzz-yellow);
+            /* Recorte nos cantos */
+            clip-path: polygon(
+                20px 0, 100% 0, 
+                100% calc(100% - 20px), calc(100% - 20px) 100%, 
+                0 100%, 0 20px
+            );
+        }
+
+        .topic-hero::after {
+             /* Overlay para escurecer a imagem e destacar o texto */
+             content: ''; position: absolute; inset: 0;
+             background: linear-gradient(to top, var(--zzz-black), transparent);
+             opacity: 0.6;
+        }
+
+        /* =================== CONTEÚDO PRINCIPAL =================== */
+        main {
+            padding: 0 5% 60px 5%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            margin-bottom: 100px;
+            position: relative;
+            /* Animação de entrada para cada secção */
+            animation: fadeUp 0.8s ease-out both;
+        }
+        /* Staggered delay para as secções */
+        section:nth-child(1) { animation-delay: 0.7s; }
+        section:nth-child(2) { animation-delay: 0.9s; }
+        section:nth-child(3) { animation-delay: 1.1s; }
+
+
+        h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: 3.5rem;
+            color: var(--zzz-white);
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            border-bottom: 2px solid var(--zzz-grey);
+            padding-bottom: 10px;
+        }
+
+        h2 span {
+            color: var(--zzz-yellow);
+            font-size: 1.5rem;
+            transform: translateY(-5px);
+        }
+
+        p {
+            margin-bottom: 25px;
+            color: #ccc;
+            font-size: 1.15rem;
+            text-align: justify;
+        }
+
+        /* =================== LAYOUT COM IMAGENS =================== */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        @media (min-width: 900px) {
+            .content-grid { grid-template-columns: 3fr 2fr; align-items: start; }
+        }
+
+        /* Caixa de Imagem Técnica */
+        .tech-image-box {
+            position: relative;
+            padding: 5px;
+            background: var(--zzz-grey);
+            /* Recorte técnico */
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+        
+        .tech-image-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(100%) contrast(1.2);
+            transition: 0.4s;
+             /* Recorte interno para casar com a borda */
+            clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+        }
+        .tech-image-box:hover img {
+            filter: grayscale(0%) contrast(1);
+        }
+        .tech-image-caption {
+            font-family: 'Teko';
+            color: var(--zzz-yellow);
+            text-align: right;
+            margin-top: 5px;
+            font-size: 1.2rem;
+        }
+
+
+        /* =================== DATA BOX (Nota de Arquivo) =================== */
+        .data-box {
+            background: rgba(219, 253, 0, 0.05);
+            border-left: 4px solid var(--zzz-yellow);
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+        }
+        .data-box::before {
+            content: 'SYSTEM_NOTE //';
+            font-family: 'Teko'; color: var(--zzz-yellow); font-size: 1.2rem; font-weight: bold;
+            display: block; margin-bottom: 10px;
+        }
+
+
+        /* =================== TIMELINE CYBERPUNK =================== */
+        .timeline {
+            list-style: none;
+            padding: 20px 0 20px 40px;
+            position: relative;
+        }
+        /* Linha vertical */
+        .timeline::before {
+            content: '';
+            position: absolute; top: 0; left: 10px; height: 100%; width: 2px;
+            background: var(--zzz-grey);
+        }
+
+        .timeline-item {
+            background: var(--zzz-dark-grey);
+            padding: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            border: 1px solid var(--zzz-grey);
+            /* Recorte técnico */
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%);
+            transition: 0.3s;
+        }
+
+        .timeline-item:hover {
+            border-color: var(--zzz-yellow);
+            transform: translateX(5px);
+            background: #1a1a1a;
+        }
+
+        /* Ponto na linha do tempo */
+        .timeline-item::before {
+            content: ''; position: absolute; top: 30px; left: -36px;
+            width: 14px; height: 14px; background: var(--zzz-black);
+            border: 3px solid var(--zzz-yellow);
+            border-radius: 50%; z-index: 2;
+        }
+        
+        .timeline-year {
+            font-family: 'Teko', sans-serif; color: var(--zzz-yellow);
+            font-size: 2.5rem; line-height: 1; margin-bottom: 10px;
+            display: block; text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+        }
+
+        .timeline-item strong {
+            color: var(--zzz-white); font-size: 1.3rem; display: block; margin-bottom: 10px;
+        }
+
+
+        /* =================== FOOTER E BOTÃO =================== */
+        .back-btn-container { text-align: center; margin: 80px 0; }
+        
+        .back-btn {
+            display: inline-block; padding: 15px 50px;
+            background: var(--zzz-yellow); color: var(--zzz-black);
+            text-decoration: none; font-family: 'Teko', sans-serif;
+            font-size: 1.8rem; font-weight: bold; text-transform: uppercase;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background: var(--zzz-white);
+            transform: scale(1.05); box-shadow: 0 0 20px var(--zzz-yellow);
+        }
+
+        footer {
+            background: var(--zzz-dark-grey); color: #666;
+            text-align: center; padding: 30px; font-family: 'Teko', sans-serif;
+            font-size: 1rem; text-transform: uppercase; border-top: 2px solid var(--zzz-grey);
+        }
+    </style>
+</head>
+<body>
+
+<header class="file-header">
+    <div class="file-meta">
+        <span>[ CLASSIFICAÇÃO: PÚBLICO ]</span>
+        <span>ID: M-INF_01</span>
+    </div>
+    <h1>Microinformática</h1>
+    <div class="file-path">Base de Dados // Hardware & História // Ficheiro 01.log</div>
+</header>
+
+<div class="topic-hero-container">
+    <div class="topic-hero">
+        </div>
+</div>
+
+<main>
+    <section>
+        <h2>Definição e Conceito <span>[01]</span></h2>
+        
+        <div class="content-grid">
+            <div>
+                <p>A <strong>Microinformática</strong> refere-se ao ramo da informática dedicado ao estudo, desenvolvimento e utilização de computadores de pequena escala, conhecidos como microcomputadores ou Computadores Pessoais (PC).</p>
+                <p>Ao contrário dos colossais <i>mainframes</i> que ocupavam salas inteiras nas décadas de 50 e 60, a microinformática democratizou o poder de processamento, trazendo-o diretamente para a secretária do utilizador individual. Foi a mudança de um paradigma centralizado para um descentralizado e pessoal.</p>
+                
+                <div class="data-box">
+                    <p style="margin:0;">O catalisador desta revolução foi o surgimento do <strong>microprocessador</strong>: a capacidade de comprimir uma Unidade Central de Processamento (CPU) inteira num único chip de silício minúsculo, tornando a tecnologia acessível, económica e portátil.</p>
+                </div>
+            </div>
+
+            <div class="tech-image-box">
+                <img src="https://comofaztuto.wordpress.com/wp-content/uploads/2014/06/blog-1.jpg" alt="Altair 8800">
+                <div class="tech-image-caption">/// FIG.01: Altair 8800 - O Início</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Evolução Histórica <span>[LOG DE DADOS]</span></h2>
+        <p>A jornada da microinformática é marcada por uma miniaturização constante e um aumento exponencial de performance (Lei de Moore). Segue o registo temporal dos eventos chave:</p>
+        
+        <ul class="timeline">
+            <li class="timeline-item">
+                <span class="timeline-year">Anos 70</span>
+                <strong>A Génese // O Despertar</strong>
+                Surge o lendário <i>Altair 8800</i> e o <i>Apple I</i>. Eram máquinas cruas para entusiastas e engenheiros, muitas vezes montadas manualmente via kits, mas provaram o conceito fundamental: um computador podia ser "pessoal".
+            </li>
+            <li class="timeline-item">
+                <span class="timeline-year">Anos 80</span>
+                <strong>Padronização // Interface Humana</strong>
+                O lançamento do <i>IBM PC</i> (1981) definiu a arquitetura padrão da indústria. Em paralelo, o Apple Macintosh (1984) popularizou a Interface Gráfica (GUI) e o rato, tornando a interação intuitiva para não-técnicos.
+            </li>
+            <li class="timeline-item">
+                <span class="timeline-year">Anos 90</span>
+                <strong>Multimédia // A Grande Rede</strong>
+                Os PCs ganham placas de som, CD-ROMs e capacidades gráficas avançadas. A "explosão" da World Wide Web transforma o computador de uma ferramenta de cálculo isolada num portal de comunicação global.
+            </li>
+            <li class="timeline-item">
+                <span class="timeline-year">Anos 2000+</span>
+                <strong>Ubiquidade // Pós-PC</strong>
+                A computação torna-se móvel com portáteis poderosos, smartphones e tablets. O foco muda do hardware local para a conectividade permanente e o processamento na Nuvem (Cloud Computing).
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Impacto na Sociedade <span>[ANÁLISE FINAL]</span></h2>
+        <div class="content-grid">
+            <div>
+                 <p>Hoje, a microinformática não é apenas uma ferramenta; é a infraestrutura fundamental da sociedade moderna. Desde a automação de escritórios até à complexa análise de dados e Inteligência Artificial, estas máquinas redefiniram o que significa produtividade e comunicação humana.</p>
+                 <p>Estamos agora na transição para a computação quântica e a integração homem-máquina, onde os limites da "microinformática" tradicional serão novamente testados e expandidos.</p>
+            </div>
+             <div class="tech-image-box" style="align-self: center;">
+                <img src="https://media.licdn.com/dms/image/v2/C5612AQElXsHfzhXRyw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1520227037113?e=2147483647&v=beta&t=jeFXh1KA6t18kBnmqKdBHgVu7uj6RnuFWX_MJhUnyGI" alt="Modern Computing Chip">
+                <div class="tech-image-caption">/// FIG.02: Arquitetura Moderna</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="back-btn-container">
+        <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    </div>
+</main>
+
+<footer>
+    DATABASE_V2.06 // REGISTO_MICROINF // FIM DE TRANSMISSÃO
+</footer>
+
+</body>
+</html>
