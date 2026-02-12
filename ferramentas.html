@@ -3,236 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ferramentas Informáticas | Protocolo de Arsenal</title>
+    <title>Ferramentas Informáticas // Protocolo de Arsenal</title>
+
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
+        /* =================== CONFIGURAÇÃO BASE =================== */
         :root {
             --zzz-yellow: #dbfd00;
             --zzz-black: #0a0a0a;
-            --zzz-dark-grey: #1a1a1a;
-            --zzz-grey: #2a2a2a;
+            --zzz-dark-grey: #141414;
+            --zzz-grey: #2b2b2b;
             --zzz-white: #ffffff;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--zzz-black);
             color: var(--zzz-white);
+            background-color: #050505;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(10,10,10,0.9), rgba(10,10,10,0.9)),
+                repeating-linear-gradient(45deg, #151515 0, #151515 1px, transparent 0, transparent 50%);
+            background-size: 20px 20px;
             line-height: 1.6;
         }
 
-        /* Scanlines e Grid de Fundo */
-        body::before {
+        /* Scanlines */
+        body::after {
             content: " ";
             display: block;
             position: fixed;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
-            background-size: 100% 4px;
-            z-index: 100;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
+            background-size: 100% 3px;
+            z-index: 9990;
             pointer-events: none;
         }
 
-        header {
+        /* =================== ANIMAÇÕES =================== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes text-glitch {
+            0% { transform: skewX(0deg); }
+            20% { transform: skewX(-15deg) translate(-5px, 2px); text-shadow: 3px 0 0 red, -3px 0 0 cyan; }
+            40% { transform: skewX(5deg) translate(5px, -2px); text-shadow: -3px 0 0 red, 3px 0 0 blue; }
+            100% { transform: skewX(0deg); }
+        }
+
+        /* =================== HEADER =================== */
+        .file-header {
             background: var(--zzz-yellow);
             color: var(--zzz-black);
-            padding: 50px 10%;
-            clip-path: polygon(0 0, 100% 0, 100% 80%, 97% 100%, 0 100%);
+            padding: 40px 5% 80px 5%;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 70% 100%, 0 95%);
+            animation: fadeUp 0.8s ease-out;
         }
 
-        header h1 {
+        .file-meta {
             font-family: 'Teko', sans-serif;
-            font-size: 4rem;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-        }
-
-        .category-tag {
-            background: var(--zzz-black);
-            color: var(--zzz-yellow);
-            display: inline-block;
-            padding: 2px 10px;
-            font-family: 'Teko';
-            font-weight: bold;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            opacity: 0.8;
             margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
         }
 
+        .file-header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 5rem;
+            text-transform: uppercase;
+            line-height: 0.9;
+            animation: text-glitch 0.6s steps(8) 0.3s backwards;
+        }
+
+        /* =================== HERO VISUAL =================== */
+        .topic-hero-container {
+            max-width: 1200px;
+            margin: -60px auto 60px auto;
+            padding: 0 5%;
+            position: relative;
+            z-index: 10;
+            animation: fadeUp 1s ease-out 0.5s backwards;
+        }
+
+        .topic-hero {
+            height: 350px;
+            background: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop') center/cover;
+            border: 3px solid var(--zzz-yellow);
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+
+        /* =================== MAIN CONTENT =================== */
         main {
-            padding: 60px 10%;
+            padding: 0 5% 60px 5%;
             max-width: 1200px;
             margin: auto;
         }
 
-        section { margin-bottom: 80px; }
+        section { margin-bottom: 80px; animation: fadeUp 0.8s ease-out both; }
 
         h2 {
             font-family: 'Teko', sans-serif;
-            font-size: 2.8rem;
-            color: var(--zzz-yellow);
+            font-size: 3.5rem;
+            color: var(--zzz-white);
             text-transform: uppercase;
-            border-bottom: 2px solid var(--zzz-grey);
             margin-bottom: 30px;
+            border-bottom: 2px solid var(--zzz-grey);
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
         }
 
-        /* Grid de Ferramentas */
+        h2 span { color: var(--zzz-yellow); font-size: 1.5rem; }
+
+        p { margin-bottom: 25px; color: #ccc; font-size: 1.15rem; text-align: justify; }
+
+        /* =================== TOOLS GRID =================== */
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 25px;
+            margin-top: 40px;
         }
 
         .tool-card {
             background: var(--zzz-dark-grey);
-            padding: 25px;
-            border-left: 5px solid var(--zzz-grey);
-            transition: all 0.3s;
+            padding: 30px;
+            border: 1px solid var(--zzz-grey);
+            border-left: 4px solid var(--zzz-yellow);
             position: relative;
-            overflow: hidden;
+            transition: 0.3s;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 92% 100%, 0 100%);
         }
 
         .tool-card:hover {
-            border-left-color: var(--zzz-yellow);
-            background: #222;
+            background: #1a1a1a;
             transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
         .tool-card h3 {
             font-family: 'Teko', sans-serif;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: var(--zzz-white);
-        }
-
-        .tool-card ul {
-            list-style: none;
-            margin-top: 15px;
-        }
-
-        .tool-card li {
-            font-size: 0.9rem;
+            font-size: 2rem;
             color: var(--zzz-yellow);
-            margin-bottom: 5px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .tool-card ul { list-style: none; }
+        .tool-card li {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
         }
 
         .tool-card li::before {
             content: ">";
-            margin-right: 8px;
+            color: var(--zzz-yellow);
+            margin-right: 10px;
             font-weight: bold;
         }
 
-        .info-box {
-            background: white;
-            color: black;
+        /* =================== DATA BOX =================== */
+        .data-box {
+            background: rgba(219, 253, 0, 0.05);
+            border: 1px dashed var(--zzz-yellow);
             padding: 30px;
-            margin-top: 40px;
-            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
-            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+        .data-box::before {
+            content: 'USER_TIPS //';
+            font-family: 'Teko'; color: var(--zzz-yellow); font-size: 1.2rem;
+            display: block; margin-bottom: 10px;
         }
 
-        .info-box h4 {
-            font-family: 'Teko';
-            font-size: 2rem;
-            text-transform: uppercase;
+        /* =================== IMAGE BOXES =================== */
+        .tech-image-box {
+            background: var(--zzz-grey);
+            padding: 5px;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            margin: 20px 0;
         }
+        .tech-image-box img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: 0.4s;
+            display: block;
+        }
+        .tech-image-box:hover img { filter: grayscale(0%); }
 
+        /* =================== BUTTON & FOOTER =================== */
+        .back-btn-container { text-align: center; margin: 80px 0; }
+        
         .back-btn {
-            display: inline-block;
-            margin-top: 50px;
-            background: var(--zzz-yellow);
-            color: var(--zzz-black);
-            padding: 15px 40px;
-            text-decoration: none;
-            font-family: 'Teko', sans-serif;
-            font-size: 1.5rem;
-            font-weight: bold;
-            clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
+            display: inline-block; padding: 15px 50px;
+            background: var(--zzz-yellow); color: var(--zzz-black);
+            text-decoration: none; font-family: 'Teko', sans-serif;
+            font-size: 1.8rem; font-weight: bold; text-transform: uppercase;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: 0.3s;
         }
 
         .back-btn:hover {
-            filter: brightness(1.1);
-            padding-left: 50px;
+            background: var(--zzz-white);
+            transform: scale(1.05); box-shadow: 0 0 20px var(--zzz-yellow);
+        }
+
+        footer {
+            background: var(--zzz-dark-grey); color: #555;
+            text-align: center; padding: 40px; font-family: 'Teko', sans-serif;
+            border-top: 2px solid var(--zzz-grey);
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="category-tag">EQUIPAMENTO_DE_SISTEMA // VER_2.0</div>
-    <h1>02. Ferramentas Informáticas</h1>
+<header class="file-header">
+    <div class="file-meta">
+        <span>[ STATUS: OPERACIONAL ]</span>
+        <span>ARSENAL_ID: F-INFO_02</span>
+    </div>
+    <h1>Arsenal de Ferramentas</h1>
+    <div style="font-family: 'Inter'; font-weight: 600; text-transform: uppercase; font-size: 0.9rem; opacity: 0.7; margin-top: 10px;">
+        Protocolo de Produtividade // Utilizador Final // v2.06
+    </div>
 </header>
+
+<div class="topic-hero-container">
+    <div class="topic-hero"></div>
+</div>
 
 <main>
     <section>
-        <h2>O Arsenal Digital</h2>
-        <p style="font-size: 1.2rem; margin-bottom: 40px; color: #aaa;">
-            Para dominar o ambiente digital, um utilizador necessita de um conjunto específico de ferramentas. Estas não são apenas programas; são extensões da nossa capacidade de processar, organizar e comunicar informação de forma eficiente.
-        </p>
-
+        <h2>O Núcleo Digital <span>[01]</span></h2>
+        <p>Para dominar o ambiente digital, um utilizador necessita de um arsenal específico de ferramentas. Não são apenas programas; são extensões da nossa capacidade de processar, organizar e comunicar informação. O domínio destas ferramentas na <strong>ótica do utilizador</strong> é o que separa um operador passivo de um mestre do sistema.</p>
+        
         <div class="tools-grid">
             <div class="tool-card">
                 <h3>Processadores de Texto</h3>
-                <p>O pilar da documentação. Essenciais para criar, editar e formatar relatórios ou trabalhos académicos.</p>
+                <p>O pilar da documentação técnica e criativa. Essenciais para estruturar o conhecimento.</p>
                 <ul>
-                    <li>Microsoft Word (Padrão Industrial)</li>
-                    <li>LibreOffice Writer (Open Source)</li>
-                    <li>Google Docs (Nuvem/Colaborativo)</li>
+                    <li>Microsoft Word</li>
+                    <li>Google Docs</li>
+                    <li>LibreOffice Writer</li>
                 </ul>
             </div>
 
             <div class="tool-card">
                 <h3>Folhas de Cálculo</h3>
-                <p>Ferramentas de análise numérica e organização de dados através de fórmulas e tabelas dinâmicas.</p>
+                <p>Motores de análise numérica. Onde os dados se transformam em estatísticas reais.</p>
                 <ul>
-                    <li>Microsoft Excel (Poder de Processamento)</li>
-                    <li>Google Sheets (Partilha em Tempo Real)</li>
-                </ul>
-            </div>
-
-            <div class="tool-card">
-                <h3>Software de Apresentação</h3>
-                <p>Utilizados para comunicar ideias de forma visual e impactante através de diapositivos.</p>
-                <ul>
-                    <li>Microsoft PowerPoint</li>
-                    <li>Prezi (Dinâmico)</li>
-                    <li>Canva (Design Moderno)</li>
-                </ul>
-            </div>
-
-            <div class="tool-card">
-                <h3>Navegadores (Browsers)</h3>
-                <p>A tua janela para a rede mundial. Interpretam código HTML/CSS para exibir conteúdos online.</p>
-                <ul>
-                    <li>Google Chrome (Velocidade)</li>
-                    <li>Mozilla Firefox (Privacidade)</li>
-                    <li>Microsoft Edge (Integração)</li>
+                    <li>Microsoft Excel</li>
+                    <li>Google Sheets</li>
+                    <li>Numbers (Apple)</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    
+    <div class="tech-image-box">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2026&auto=format&fit=crop" alt="Data Analysis Interface">
+    </div>
 
     <section>
-        <h2>A Importância da Ótica do Utilizador</h2>
-        <p>Dominar estas ferramentas na <strong>ótica do utilizador</strong> significa ser capaz de operar o software de forma produtiva, sem necessariamente conhecer a programação por trás dele. No mercado de trabalho atual, este conhecimento não é um bónus, mas sim um requisito mínimo de sobrevivência.</p>
-        
-        <div class="info-box">
-            <h4>Dica de Produtividade</h4>
-            <p>A utilização de <strong>Atalhos de Teclado</strong> (como Ctrl+C / Ctrl+V) pode aumentar a tua velocidade de trabalho em até 30%. Domina as teclas, domina o sistema.</p>
+        <h2>Comunicação e Web <span>[02]</span></h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>Design de Apresentação</h3>
+                <p>Interfaces visuais para transmissão de ideias e projetos complexos.</p>
+                <ul>
+                    <li>PowerPoint</li>
+                    <li>Canva</li>
+                    <li>Prezi</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <h3>Browsers de Rede</h3>
+                <p>A tua gateway para a World Wide Web e ferramentas Cloud.</p>
+                <ul>
+                    <li>Chrome (Engine V8)</li>
+                    <li>Firefox (Quantum)</li>
+                    <li>Microsoft Edge</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="data-box">
+            <p><strong>DICA DE PERFORMANCE:</strong> O uso de atalhos de teclado (Hotkey mapping) pode aumentar a eficiência operacional em 30%. Comandos como CTRL+C, CTRL+V e ALT+TAB devem estar na memória muscular de qualquer utilizador avançado.</p>
         </div>
     </section>
 
-    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    <div class="back-btn-container">
+        <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    </div>
 </main>
 
 <footer>
-    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
-        SISTEMA DE ARQUIVO // REGISTO_FERRAMENTAS_INFO
-    </div>
+    DATABASE_V2.06 // REGISTO_FERRAMENTAS // ACESSO_FINALIZADO
 </footer>
 
 </body>
