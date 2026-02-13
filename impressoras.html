@@ -3,229 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impressoras | Unidade de Output Físico</title>
+    <title> // Impressoras //</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
+        /* =================== CONFIGURAÇÃO BASE =================== */
         :root {
             --zzz-yellow: #dbfd00;
             --zzz-black: #0a0a0a;
-            --zzz-dark: #1a1a1a;
+            --zzz-dark-grey: #141414;
+            --zzz-grey: #2b2b2b;
             --zzz-white: #ffffff;
-            --zzz-grey: #333;
+            --zzz-danger: #ff2a2a;
+            --glitch-red: rgba(255, 0, 80, 0.8);
+            --glitch-blue: rgba(0, 255, 255, 0.8);
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--zzz-black);
             color: var(--zzz-white);
+            background-color: #050505;
+            overflow-x: hidden;
+            /* Fundo Cyberpunk */
+            background-image: 
+                linear-gradient(rgba(10,10,10,0.95), rgba(10,10,10,0.95)),
+                repeating-linear-gradient(0deg, #111 0, #111 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, #111 0, #111 1px, transparent 1px, transparent 40px);
             line-height: 1.6;
         }
 
-        /* Efeito de grelha de fundo */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(219, 253, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(219, 253, 0, 0.03) 1px, transparent 1px);
-            background-size: 20px 20px;
-            pointer-events: none;
+        /* Scanlines (Monitor Antigo) */
+        body::after {
+            content: " ";
+            display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            z-index: 9990; pointer-events: none;
+            animation: scanlineMove 10s linear infinite;
         }
 
-        header {
+        /* =================== ANIMAÇÕES =================== */
+        @keyframes scanlineMove { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(50px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes text-glitch {
+            0% { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); transform: translate(-2px, 0); }
+            20% { clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%); transform: translate(2px, 0); }
+            30% { clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%); transform: translate(-2px, 0); }
+            40% { clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%); transform: translate(0, 5px); }
+            50% { clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%); transform: translate(0, 0); }
+            100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: translate(0, 0); }
+        }
+
+        @keyframes hero-cycle {
+            0%, 100% { filter: grayscale(100%) contrast(1.2); }
+            50% { filter: grayscale(0%) sepia(20%) hue-rotate(10deg); }
+        }
+
+        /* =================== HEADER =================== */
+        .file-header {
             background: var(--zzz-yellow);
             color: var(--zzz-black);
-            padding: 50px 10%;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 5% 100%, 0 80%);
+            padding: 50px 5% 100px 5%;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        header h1 {
-            font-family: 'Teko', sans-serif;
-            font-size: 4.5rem;
-            text-transform: uppercase;
-            line-height: 0.8;
+        .file-meta {
+            font-family: 'Teko', sans-serif; font-size: 1.3rem; font-weight: 700;
+            display: flex; justify-content: space-between;
+            border-bottom: 2px solid rgba(0,0,0,0.1); margin-bottom: 15px;
         }
 
-        .module-id {
-            font-family: 'Teko';
-            font-size: 1.2rem;
-            font-weight: bold;
-            letter-spacing: 4px;
+        .file-header h1 {
+            font-family: 'Teko', sans-serif; font-size: 6rem;
+            text-transform: uppercase; line-height: 0.8; position: relative;
         }
 
-        main {
-            padding: 60px 10%;
-            max-width: 1200px;
-            margin: auto;
+        .file-header h1::before, .file-header h1::after {
+            content: "PRINTERS";
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8;
         }
+        .file-header h1::after { color: var(--glitch-red); z-index: -1; animation: text-glitch 2.5s infinite linear alternate-reverse; left: 2px; }
+        .file-header h1::before { color: var(--glitch-blue); z-index: -2; animation: text-glitch 3s infinite linear alternate-reverse; left: -2px; }
+
+        /* =================== HERO VISUAL =================== */
+        .hero-section {
+            max-width: 1300px; margin: -60px auto 80px auto; padding: 0 5%;
+            z-index: 10; position: relative;
+            animation: fadeUp 0.8s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        .hero-banner {
+            height: 350px;
+            /* IMAGEM PRINCIPAL */
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://s.zst.com.br/cms-assets/2021/07/impressora-capa-1-.jpg');
+            background-size: cover; background-position: center;
+            border: 4px solid var(--zzz-yellow);
+            clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+            animation: hero-cycle 10s infinite alternate;
+        }
+
+        /* =================== CONTEÚDO =================== */
+        main { padding: 0 5% 100px 5%; max-width: 1300px; margin: auto; }
+
+        section { 
+            margin-bottom: 120px; 
+            opacity: 0; 
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+        }
+        section:nth-of-type(1) { animation-delay: 0.4s; }
+        section:nth-of-type(2) { animation-delay: 0.6s; }
+        section:nth-of-type(3) { animation-delay: 0.8s; }
 
         h2 {
-            font-family: 'Teko', sans-serif;
-            font-size: 2.8rem;
-            color: var(--zzz-yellow);
-            text-transform: uppercase;
-            margin: 40px 0 20px;
-            border-bottom: 2px solid var(--zzz-grey);
+            font-family: 'Teko', sans-serif; font-size: 4rem;
+            text-transform: uppercase; border-left: 15px solid var(--zzz-yellow);
+            padding-left: 25px; margin-bottom: 40px; color: var(--zzz-white);
+        }
+        h2 span { font-size: 1.5rem; color: var(--zzz-yellow); vertical-align: middle; margin-left: 10px; }
+
+        p { margin-bottom: 20px; color: #ccc; font-size: 1.15rem; text-align: justify; }
+
+        /* === CARDS DE IMPRESSORAS === */
+        .sw-card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+        
+        .sw-card {
+            background: var(--zzz-dark-grey); 
+            padding: 0; /* Removido padding para a imagem colar nas bordas */
+            border-bottom: 4px solid var(--zzz-grey);
+            transition: 0.3s; 
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%);
+            display: flex; flex-direction: column;
+        }
+        
+        /* Estilo da Imagem dentro do Card */
+        .sw-card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--zzz-yellow);
+            filter: grayscale(100%) contrast(1.2);
+            transition: 0.4s;
         }
 
-        /* Tipos de Impressoras Grid */
-        .printer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+        .sw-card-content { padding: 25px; }
+
+        /* Hover Effects */
+        .sw-card:hover { background: var(--zzz-grey); border-bottom-color: var(--zzz-yellow); transform: translateY(-10px); }
+        .sw-card:hover .sw-card-img { filter: grayscale(0%) contrast(1); }
+
+        .sw-card h3 { font-family: 'Teko'; font-size: 2.2rem; color: var(--zzz-yellow); text-transform: uppercase; margin-bottom: 10px;}
+        
+        .tag {
+            display: inline-block; padding: 2px 10px; background: #000;
+            color: var(--zzz-yellow); font-family: 'Teko'; font-size: 1.1rem;
+            margin-right: 5px; border-radius: 2px; margin-top: 10px;
         }
 
-        .printer-card {
-            background: var(--zzz-dark);
-            border: 1px solid #444;
-            padding: 30px;
-            position: relative;
-            transition: 0.3s;
+        /* === MANUTENÇÃO E AVISOS === */
+        .maintenance-grid {
+            display: grid; grid-template-columns: 1fr; gap: 40px;
+        }
+        @media(min-width: 900px) { .maintenance-grid { grid-template-columns: 2fr 1fr; } }
+
+        .protocol-box {
+            background: var(--zzz-white); color: var(--zzz-black);
+            padding: 40px; clip-path: polygon(30px 0, 100% 0, 100% 100%, 0 100%, 0 30px);
         }
 
-        .printer-card:hover {
-            border-color: var(--zzz-yellow);
-            transform: scale(1.02);
-        }
-
-        .printer-card h3 {
-            font-family: 'Teko';
-            font-size: 2rem;
-            color: var(--zzz-yellow);
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        /* Manuseamento e Avisos */
-        .maintenance-protocol {
-            background: var(--zzz-white);
-            color: var(--zzz-black);
-            padding: 40px;
-            margin: 40px 0;
-            clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 0 100%);
-        }
-
-        .maintenance-protocol h3 {
-            font-family: 'Teko';
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .protocol-list {
-            list-style: none;
-        }
-
+        .protocol-list { list-style: none; }
         .protocol-list li {
-            font-weight: 700;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.2rem;
         }
+        .protocol-list li::before { content: "►"; color: var(--zzz-yellow); background: var(--zzz-black); padding: 2px 8px; font-size: 0.8rem; }
 
-        .protocol-list li::before {
-            content: "■";
-            color: var(--zzz-yellow);
-            background: black;
-            padding: 0 5px;
-        }
-
-        .warning-jam {
-            background: #ff4545;
+        /* AVISO GLITCH */
+        .warning-box {
+            background: var(--zzz-danger);
             color: white;
-            padding: 20px;
+            padding: 30px;
             font-weight: 800;
             text-transform: uppercase;
-            text-align: center;
-            margin-top: 30px;
-            border: 4px solid black;
+            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+            box-shadow: 10px 10px 0px rgba(255, 69, 69, 0.2);
+            animation: text-glitch 3s infinite alternate-reverse;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            font-size: 1.5rem; font-family: 'Teko'; line-height: 1.2;
         }
 
+        /* Botão Voltar */
+        .btn-zone { text-align: center; margin: 100px 0; }
         .back-btn {
-            display: inline-block;
-            margin-top: 40px;
-            background: var(--zzz-white);
-            color: var(--zzz-black);
-            padding: 15px 45px;
-            text-decoration: none;
-            font-family: 'Teko', sans-serif;
-            font-size: 1.6rem;
-            font-weight: bold;
-            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+            display: inline-block; padding: 20px 60px;
+            background: var(--zzz-yellow); color: var(--zzz-black);
+            text-decoration: none; font-family: 'Teko', sans-serif;
+            font-size: 2rem; font-weight: bold; text-transform: uppercase;
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+            transition: 0.4s;
         }
+        .back-btn:hover { background: var(--zzz-white); transform: scale(1.1); box-shadow: 0 0 30px var(--zzz-yellow); }
 
-        .back-btn:hover { background: var(--zzz-yellow); }
-
+        footer {
+            background: var(--zzz-black); color: #444; text-align: center;
+            padding: 50px; font-family: 'Teko'; border-top: 1px solid #111;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="module-id">HARDWARE_OUTPUT // UNID_11</div>
-    <h1>Manuseamento de Impressoras</h1>
+<header class="file-header">
+    <div class="file-meta">
+        <span>[ HARDWARE_OUTPUT // UNID_11 ]</span>
+        <span>STATUS: ONLINE</span>
+    </div>
+    <h1>PRINTERS</h1>
+    <div style="font-family: 'Teko'; font-size: 1.5rem; opacity: 0.6;">/// UNIDADE DE OUTPUT FÍSICO</div>
 </header>
+
+<div class="hero-section">
+    
+    <div class="hero-banner"></div>
+</div>
 
 <main>
     <section>
-        <h2>O Salto do Digital para o Físico</h2>
-        <p>A impressora é um periférico de saída que permite traduzir dados digitais em suporte físico (geralmente papel). Dependendo do volume de trabalho e da qualidade pretendida, existem diferentes tecnologias disponíveis.</p>
-        
-        <div class="printer-grid">
-            <div class="printer-card">
-                <h3>Jato de Tinta (Inkjet)</h3>
-                <p>Ideal para uso doméstico e fotografias. Funciona através da ejeção de minúsculas gotas de tinta líquida de tinteiros (CMYK) para o papel.</p>
+        <h2>Do Digital ao Físico <span>[01]</span></h2>
+        <p>A impressora é o componente periférico responsável por materializar dados binários. Enquanto o monitor é volátil, a impressora cria registos permanentes.</p>
+        <p>Apesar da digitalização global, a necessidade de <strong>Hard Copy</strong> (cópia física) mantém-se crítica em logística, engenharia e artes.</p>
+    </section>
+
+    <section>
+        <h2>Tecnologias de Impressão <span>[02]</span></h2>
+        <div class="sw-card-container">
+            <div class="sw-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHd6HA887Nxse8ZVlcjTgmLaOP9gq9e_HBJg&s" alt="Inkjet" class="sw-card-img">
+                <div class="sw-card-content">
+                    <h3>Jato de Tinta</h3>
+                    <p>Ejeção de gotas microscópicas de tinta líquida. Alta precisão de cor.</p>
+                    <span class="tag">CMYK</span><span class="tag">HOME</span>
+                </div>
             </div>
-            <div class="printer-card">
-                <h3>Laser</h3>
-                <p>Utilizada em escritórios pelo seu baixo custo por página e alta velocidade. Utiliza um pó fino chamado <strong>Toner</strong> que é fixado ao papel através de calor.</p>
+            
+            <div class="sw-card">
+                <img src="https://pplware.sapo.pt/wp-content/uploads/2022/09/sculpfun_s9_1.jpg" alt="Laser Printer" class="sw-card-img">
+                <div class="sw-card-content">
+                    <h3>Laser</h3>
+                    <p>Uso de eletricidade estática e pó (Toner) fundido a calor. Alta velocidade.</p>
+                    <span class="tag">OFFICE</span><span class="tag">TONER</span>
+                </div>
             </div>
-            <div class="printer-card">
-                <h3>Térmica</h3>
-                <p>Muito comum em talões de supermercado e etiquetas. Não usa tinta, mas sim calor sobre um papel especial que reage à temperatura.</p>
+
+            <div class="sw-card">
+                <img src="https://www.brother.pt/-/media/images/brother-pt/blog/header-images/2023/imagen7.jpg?rev=db3895e397df47a6a8857f64ef643b6b&mw=1170&hash=5B1824079670331D8444065DC94865EE" alt="Thermal Printer" class="sw-card-img">
+                <div class="sw-card-content">
+                    <h3>Térmica</h3>
+                    <p>Aquecimento seletivo de papel termossensível. Sem tinta.</p>
+                    <span class="tag">POS</span><span class="tag">RÁPIDO</span>
+                </div>
             </div>
-            <div class="printer-card">
-                <h3>Impressoras 3D</h3>
-                <p>A fronteira moderna. "Imprimem" objetos tridimensionais camada por camada, utilizando filamentos de plástico ou resina.</p>
+
+            <div class="sw-card">
+                <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=2070" alt="3D Printer" class="sw-card-img">
+                <div class="sw-card-content">
+                    <h3>Impressão 3D</h3>
+                    <p>Adição de camadas sucessivas de polímeros (PLA, ABS) ou resina.</p>
+                    <span class="tag">STL</span><span class="tag">FÍSICO</span>
+                </div>
             </div>
         </div>
     </section>
 
-    
-
     <section>
-        <div class="maintenance-protocol">
-            <h3>Protocolo de Manutenção</h3>
-            <ul class="protocol-list">
-                <li>Verificar níveis de Tinteiro/Toner antes de grandes trabalhos.</li>
-                <li>Utilizar papel com a gramagem correta para evitar danos no rolo.</li>
-                <li>Realizar ciclos de limpeza de cabeçotes se a impressão falhar.</li>
-                <li>Manter a impressora num local livre de humidade excessiva.</li>
-            </ul>
-
-            <div class="warning-jam">
-                ⚠ ALERTA DE ENCRAVAMENTO: Nunca puxes o papel com força bruta. Segue sempre as instruções do painel para libertar os rolos.
+        <h2>Protocolos & Avisos <span>[CRITICAL]</span></h2>
+        <div class="maintenance-grid">
+            <div class="protocol-box">
+                <h4 style="font-family:'Teko'; font-size:2rem; text-transform:uppercase; margin-bottom:20px; border-bottom:2px solid black;">Checklist de Manutenção</h4>
+                <ul class="protocol-list">
+                    <li>Verificar níveis de consumíveis (Toner/Tinta).</li>
+                    <li>Garantir gramagem correta do papel (75g - 90g).</li>
+                    <li>Executar alinhamento de cabeçotes mensalmente.</li>
+                    <li>Manter longe de humidade (>60%).</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                ⚠ ERRO CRÍTICO:<br>
+                SE O PAPEL ENCRAVAR,<br>
+                NÃO FORCES OS ROLOS.<br>
+                SEGUE O PAINEL.
             </div>
         </div>
     </section>
 
-    
-
-    <section>
-        <h2>Conectividade</h2>
-        <p>As impressoras modernas operam através de várias interfaces. Enquanto o <strong>USB</strong> é o padrão para ligação direta, as impressoras de rede (via <strong>Wi-Fi</strong> ou <strong>Ethernet</strong>) permitem que múltiplos utilizadores imprimam a partir de qualquer dispositivo, incluindo smartphones.</p>
-    </section>
-
-    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    <div class="btn-zone">
+        <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    </div>
 </main>
 
 <footer>
-    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
-        PRINT_TERMINAL_V1 // HARDWARE_SYNC
-    </div>
+    HARDWARE_SYNC_V4 // 2026 // SYSTEM OUTPUT // [EOF]
 </footer>
 
 </body>
