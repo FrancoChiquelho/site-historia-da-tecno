@@ -3,240 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apresentações | Protocolo de Projeção</title>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title> // Visual Output // Técnicas de Apresentação</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    
     <style>
+        /* =================== MESMA CONFIGURAÇÃO BASE =================== */
         :root {
             --zzz-yellow: #dbfd00;
             --zzz-black: #0a0a0a;
-            --zzz-dark: #151515;
+            --zzz-dark-grey: #141414;
+            --zzz-grey: #2b2b2b;
             --zzz-white: #ffffff;
+            --zzz-danger: #ff2a2a;
+            --glitch-red: rgba(255, 0, 80, 0.8);
+            --glitch-blue: rgba(0, 255, 255, 0.8);
+            --neon-blue: #00f3ff;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--zzz-black);
             color: var(--zzz-white);
+            background-color: #050505;
+            overflow-x: hidden;
+            /* Grid Background idêntico */
+            background-image: 
+                linear-gradient(rgba(5,5,5,0.97), rgba(5,5,5,0.97)),
+                linear-gradient(0deg, rgba(219, 253, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(219, 253, 0, 0.1) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
             line-height: 1.6;
         }
 
-        /* Linhas de scanline para efeito de monitor */
+        /* Scanlines */
         body::after {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
+            content: " ";
+            display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
             background-size: 100% 4px;
-            pointer-events: none;
-            z-index: 1000;
+            z-index: 9990; pointer-events: none;
         }
 
-        header {
+        /* =================== ANIMAÇÕES =================== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(50px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes text-glitch {
+            0% { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); transform: translate(-2px, 0); }
+            20% { clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%); transform: translate(2px, 0); }
+            40% { clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%); transform: translate(0, 5px); }
+            100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: translate(0, 0); }
+        }
+
+        /* =================== HEADER (ESTILO GLITCH) =================== */
+        .file-header {
             background: var(--zzz-yellow);
             color: var(--zzz-black);
-            padding: 50px 10%;
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+            padding: 50px 5% 100px 5%;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        header h1 {
-            font-family: 'Teko', sans-serif;
-            font-size: 4.5rem;
-            text-transform: uppercase;
-            line-height: 0.9;
+        .file-meta {
+            font-family: 'Teko', sans-serif; font-size: 1.3rem; font-weight: 700;
+            display: flex; justify-content: space-between;
+            border-bottom: 2px solid rgba(0,0,0,0.1); margin-bottom: 15px;
         }
 
-        .tag-id {
-            background: var(--zzz-black);
-            color: var(--zzz-yellow);
-            display: inline-block;
-            padding: 2px 12px;
-            font-family: 'Teko';
-            font-weight: 700;
-            margin-bottom: 10px;
+        .file-header h1 {
+            font-family: 'Teko', sans-serif; font-size: 5.5rem;
+            text-transform: uppercase; line-height: 0.8; position: relative;
         }
 
-        main {
-            padding: 60px 10%;
-            max-width: 1200px;
-            margin: auto;
+        .file-header h1::before, .file-header h1::after {
+            content: "PROJECTION_V7";
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8;
         }
+        .file-header h1::after { color: var(--glitch-red); z-index: -1; animation: text-glitch 2.5s infinite linear alternate-reverse; left: 2px; }
+        .file-header h1::before { color: var(--glitch-blue); z-index: -2; animation: text-glitch 3s infinite linear alternate-reverse; left: -2px; }
+
+        /* =================== HERO VISUAL =================== */
+        .hero-section {
+            max-width: 1300px; margin: -60px auto 80px auto; padding: 0 5%;
+            z-index: 10; position: relative;
+            animation: fadeUp 0.8s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        .hero-banner {
+            height: 350px;
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1492619334764-22ae85c75821?q=80&w=2671&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            border: 4px solid var(--zzz-yellow);
+            clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+        }
+
+        /* =================== CONTEÚDO =================== */
+        main { padding: 0 5% 100px 5%; max-width: 1300px; margin: auto; }
+
+        section { 
+            margin-bottom: 120px; opacity: 0; 
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+        }
+        section:nth-of-type(1) { animation-delay: 0.4s; }
+        section:nth-of-type(2) { animation-delay: 0.6s; }
+        section:nth-of-type(3) { animation-delay: 0.8s; }
 
         h2 {
-            font-family: 'Teko', sans-serif;
-            font-size: 2.8rem;
+            font-family: 'Teko', sans-serif; font-size: 4rem;
+            text-transform: uppercase; border-left: 15px solid var(--zzz-yellow);
+            padding-left: 25px; margin-bottom: 40px; color: var(--zzz-white);
+        }
+        h2 span { font-size: 1.5rem; color: var(--zzz-yellow); vertical-align: middle; margin-left: 10px; }
+
+        p { margin-bottom: 20px; color: #ccc; font-size: 1.15rem; text-align: justify; }
+
+        /* === TABELA CYBERPUNK === */
+        .cyber-table-container {
+            overflow-x: auto;
+            border: 1px solid var(--zzz-grey);
+            background: rgba(20, 20, 20, 0.8);
+            clip-path: polygon(0 0, 100% 0, 100% 95%, 98% 100%, 0 100%);
+        }
+
+        .cyber-table {
+            width: 100%; border-collapse: collapse; min-width: 600px;
+        }
+
+        .cyber-table th {
+            background: var(--zzz-dark-grey);
             color: var(--zzz-yellow);
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            border-left: 8px solid var(--zzz-yellow);
-            padding-left: 20px;
+            font-family: 'Teko'; font-size: 1.6rem; letter-spacing: 1px;
+            text-align: left; padding: 20px;
+            border-bottom: 2px solid var(--zzz-yellow);
         }
 
-        p {
-            font-size: 1.1rem;
-            color: #ccc;
-            margin-bottom: 30px;
+        .cyber-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #333;
+            border-right: 1px solid #222;
+            font-family: 'Inter'; font-size: 1rem;
         }
 
-        /* Grid de Dicas de Design */
-        .design-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
+        .cyber-table tr:hover td { background: rgba(219, 253, 0, 0.05); color: var(--zzz-white); }
+        .cyber-table td:first-child { font-family: 'Fira Code', monospace; color: var(--neon-blue); font-weight: bold; }
+
+        /* === CARTÕES DE COMANDO (DESIGN RULES) === */
+        .function-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
         }
 
-        .design-card {
-            background: var(--zzz-dark);
+        .cmd-card {
+            background: #111;
             border: 1px solid #333;
-            padding: 30px;
+            padding: 25px;
             position: relative;
             transition: 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%, 0 10%);
         }
 
-        .design-card:hover {
-            border-color: var(--zzz-yellow);
-            transform: translateY(-5px);
-        }
+        .cmd-card:hover { transform: translateY(-5px); border-color: var(--zzz-yellow); }
+        .cmd-card::before { content: "::"; position: absolute; top: 10px; right: 15px; color: #333; font-family: 'Teko'; font-size: 2rem;}
 
-        .design-card h3 {
-            font-family: 'Teko', sans-serif;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--zzz-yellow);
-        }
-
-        .number-bg {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-family: 'Teko';
-            font-size: 3rem;
-            color: rgba(255,255,255,0.05);
-            font-weight: 800;
-        }
-
-        /* Lista de Boas Práticas */
-        .best-practices {
-            background: var(--zzz-white);
-            color: var(--zzz-black);
-            padding: 40px;
-            clip-path: polygon(2% 0%, 100% 0%, 98% 100%, 0% 100%);
-            margin: 40px 0;
-        }
-
-        .best-practices h3 {
-            font-family: 'Teko';
-            font-size: 2.2rem;
+        .cmd-code {
+            display: block; font-family: 'Fira Code', monospace;
+            color: var(--zzz-yellow); background: #000;
+            padding: 15px; border-left: 3px solid var(--zzz-yellow);
+            margin-bottom: 15px; font-size: 1.1rem;
             text-transform: uppercase;
+        }
+
+        .cmd-desc { font-size: 0.95rem; color: #888; }
+
+        /* === GRÁFICO DE IMPACTO === */
+        .chart-visual {
+            display: flex; gap: 5px; align-items: flex-end; height: 100px; width: 100%;
+            padding: 20px; background: #111; border-bottom: 2px solid var(--zzz-grey);
             margin-bottom: 20px;
-            text-align: center;
         }
+        .bar { width: 100%; background: var(--zzz-grey); transition: 0.5s; position: relative;}
+        .bar:hover { background: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
 
-        .best-practices ul {
-            list-style: none;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+        /* === AVISO DE ERRO (CRITICAL DESIGN ERRORS) === */
+        .error-zone {
+            margin-top: 50px;
+            border: 2px solid var(--zzz-danger);
+            background: rgba(255, 42, 42, 0.05);
+            padding: 30px;
+            display: flex; align-items: center; gap: 20px;
+            clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
         }
+        .error-icon { font-size: 3rem; color: var(--zzz-danger); animation: text-glitch 2s infinite; }
 
-        .best-practices li {
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .best-practices li::before {
-            content: "✔";
-            color: #00aa00;
-        }
-
+        /* Botão Voltar */
+        .btn-zone { text-align: center; margin: 100px 0; }
         .back-btn {
-            display: inline-block;
-            margin-top: 40px;
-            background: var(--zzz-yellow);
-            color: var(--zzz-black);
-            padding: 15px 45px;
-            text-decoration: none;
-            font-family: 'Teko', sans-serif;
-            font-size: 1.6rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
-            transition: 0.3s;
+            display: inline-block; padding: 20px 60px;
+            background: var(--zzz-yellow); color: var(--zzz-black);
+            text-decoration: none; font-family: 'Teko', sans-serif;
+            font-size: 2rem; font-weight: bold; text-transform: uppercase;
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+            transition: 0.4s;
         }
+        .back-btn:hover { background: var(--zzz-white); transform: scale(1.1); box-shadow: 0 0 30px var(--zzz-yellow); }
 
-        .back-btn:hover {
-            filter: brightness(1.2);
-            padding-left: 60px;
+        footer {
+            background: var(--zzz-black); color: #444; text-align: center;
+            padding: 50px; font-family: 'Teko'; border-top: 1px solid #111;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="tag-id">VISUAL_OUTPUT // MODULE_07</div>
-    <h1>Técnicas de Apresentação</h1>
+<header class="file-header">
+    <div class="file-meta">
+        <span>[ MODULE_07 // VISUAL_OUTPUT ]</span>
+        <span>STATUS: PROJECTING...</span>
+    </div>
+    <h1>PROJECTION_V7</h1>
+    <div style="font-family: 'Teko'; font-size: 1.5rem; opacity: 0.6;">/// TÉCNICAS DE APRESENTAÇÃO & COMUNICAÇÃO</div>
 </header>
+
+<div class="hero-section">
+    <div class="hero-banner"></div>
+</div>
 
 <main>
     <section>
-        <h2>Comunicação Visual Eficaz</h2>
-        <p>A criação de <strong>apresentações de diapositivos</strong> (slides) é uma competência essencial para transmitir ideias, relatórios e projetos. Mais do que apenas colocar texto num ecrã, uma boa apresentação deve servir de suporte visual ao orador, mantendo o público focado e interessado.</p>
+        <h2>Protocolos Visuais <span>[GRID_LAYOUT]</span></h2>
+        <p>Uma apresentação eficaz é a fusão entre narrativa e design. Mais do que suportes de texto, os diapositivos são interfaces visuais que devem guiar a atenção do utilizador para o objetivo central.</p>
         
-        <div class="design-grid">
-            <div class="design-card">
-                <div class="number-bg">01</div>
-                <h3>Estrutura Lógica</h3>
-                <p>Cada apresentação deve ter uma narrativa: Introdução (o quê), Desenvolvimento (os factos) e Conclusão (o resumo e próximos passos).</p>
+        <div class="cyber-table-container">
+            <table class="cyber-table">
+                <thead>
+                    <tr>
+                        <th>CONCEITO</th>
+                        <th>ESPECIFICAÇÃO TÉCNICA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[SLIDE_MASTER]</td>
+                        <td>A matriz de design global que define fontes e cores.</td>
+                    </tr>
+                    <tr>
+                        <td>[LAYOUT]</td>
+                        <td>A arquitetura de elementos dentro do diapositivo.</td>
+                    </tr>
+                    <tr>
+                        <td>[TRANSITION]</td>
+                        <td>Processamento visual entre diferentes estados de dados.</td>
+                    </tr>
+                    <tr>
+                        <td>[ASSETS]</td>
+                        <td>Elementos multimédia (vídeos, HD Images) de suporte.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>Diretrizes de Design <span>[RULES]</span></h2>
+        <p>Implementa estes padrões para garantir a máxima retenção de informação.</p>
+        
+        <div class="function-grid">
+            <div class="cmd-card">
+                <code class="cmd-code">ESTRUTURA_LÓGICA</code>
+                <div class="cmd-desc">Introdução, Desenvolvimento e Conclusão. Uma narrativa linear e clara.</div>
+            </div>
+            
+            <div class="cmd-card">
+                <code class="cmd-code">ALTO_CONTRASTE</code>
+                <div class="cmd-desc">Cores escuras sobre claras ou vice-versa para máxima legibilidade.</div>
             </div>
 
-            <div class="design-card">
-                <div class="number-bg">02</div>
-                <h3>Design e Cores</h3>
-                <p>Utiliza paletas de cores com alto contraste (como este site!) para garantir a legibilidade. Evita fundos muito claros com letras claras.</p>
+            <div class="cmd-card">
+                <code class="cmd-code">ELEMENTOS_MULTIMÉDIA</code>
+                <div class="cmd-desc">Utilização de ícones e vídeos para quebrar a densidade do texto.</div>
             </div>
 
-            <div class="design-card">
-                <div class="number-bg">03</div>
-                <h3>Multimédia</h3>
-                <p>Gráficos, ícones e vídeos ajudam a quebrar a monotonia do texto e explicam conceitos complexos de forma instantânea.</p>
-            </div>
-
-            <div class="design-card">
-                <div class="number-bg">04</div>
-                <h3>Animações</h3>
-                <p>Usa transições de forma subtil. O objetivo é guiar o olhar do espetador, não distraí-lo com movimentos excessivos.</p>
+            <div class="cmd-card">
+                <code class="cmd-code">ANIMAÇÃO_SUBTIL</code>
+                <div class="cmd-desc">Movimentos funcionais para guiar o olhar, nunca para distrair.</div>
             </div>
         </div>
     </section>
 
     <section>
-        <div class="best-practices">
-            <h3>Boas Práticas de "Ouro"</h3>
-            <ul>
-                <li>Máximo de 6 linhas de texto por diapositivo.</li>
-                <li>Usa imagens de alta qualidade (HD).</li>
-                <li>Mantém a consistência de fontes em todos os slides.</li>
-                <li>Não leias diretamente o que está escrito no slide.</li>
-                <li>Menos é mais: Evita a poluição visual.</li>
-                <li>Usa esquemas de cores profissionais (Canva, SlidesGo).</li>
-            </ul>
+        <h2>Fluxo de Atenção <span>[ATTN_RENDER]</span></h2>
+        <p>A atenção do público é um recurso limitado. Otimiza os teus gráficos para leitura instantânea.</p>
+        
+        <div class="chart-visual">
+            <div class="bar" style="height: 20%;"></div>
+            <div class="bar" style="height: 40%; background: #444;"></div>
+            <div class="bar" style="height: 70%; background: #666;"></div>
+            <div class="bar" style="height: 35%;"></div>
+            <div class="bar" style="height: 100%; background: var(--zzz-yellow);"></div>
+            <div class="bar" style="height: 55%;"></div>
         </div>
 
-        <h2>Softwares de Referência</h2>
-        <p>Existem várias ferramentas para este fim, desde o clássico <strong>Microsoft PowerPoint</strong>, ao dinâmico <strong>Prezi</strong>, passando pelo colaborativo <strong>Google Slides</strong> e o moderno <strong>Canva Presentations</strong>.</p>
+        <div class="error-zone">
+            <div class="error-icon">⚠</div>
+            <div>
+                <h3 style="font-family:'Teko'; color:var(--zzz-danger); font-size:1.8rem;">CRITICAL: DATA_OVERLOAD</h3>
+                <p style="margin:0; font-size:0.9rem; color: #ff8888;">Detetado excesso de texto no diapositivo. Aplica a Regra dos 6x6 para evitar fadiga cognitiva do espetador.</p>
+            </div>
+        </div>
     </section>
 
-    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    <div class="btn-zone">
+        <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    </div>
 </main>
 
 <footer>
-    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
-        SISTEMA DE PROJEÇÃO // PROJECT_V_07
-    </div>
+    VISUAL_SYSTEM_STABLE // PROJECTION_DONE // [EOF]
 </footer>
 
 </body>
