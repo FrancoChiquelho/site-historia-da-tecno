@@ -3,243 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hardware | Especificações Técnicas</title>
+    <title>Hardware // Especificações Técnicas</title>
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
+        /* =================== CONFIGURAÇÃO BASE =================== */
         :root {
             --zzz-yellow: #dbfd00;
             --zzz-black: #0a0a0a;
-            --zzz-dark-grey: #1a1a1a;
+            --zzz-dark-grey: #141414;
+            --zzz-grey: #2b2b2b;
             --zzz-white: #ffffff;
             --zzz-danger: #ff4545;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--zzz-black);
             color: var(--zzz-white);
+            background-color: #050505;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(10,10,10,0.9), rgba(10,10,10,0.9)),
+                repeating-linear-gradient(45deg, #151515 0, #151515 1px, transparent 0, transparent 50%);
+            background-size: 20px 20px;
             line-height: 1.6;
         }
 
-        /* Efeito de overlay tecnológico */
-        body::before {
-            content: "";
+        /* Efeito de Scanlines */
+        body::after {
+            content: " ";
+            display: block;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px);
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
+            background-size: 100% 3px;
+            z-index: 9990;
             pointer-events: none;
-            z-index: 1000;
         }
 
-        header {
+        /* =================== ANIMAÇÕES =================== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes text-glitch {
+            0% { transform: skewX(0deg); }
+            20% { transform: skewX(-15deg) translate(-5px, 2px); text-shadow: 3px 0 0 red, -3px 0 0 cyan; }
+            40% { transform: skewX(5deg) translate(5px, -2px); text-shadow: -3px 0 0 red, 3px 0 0 blue; }
+            100% { transform: skewX(0deg); }
+        }
+
+        /* =================== HEADER =================== */
+        .file-header {
             background: var(--zzz-yellow);
             color: var(--zzz-black);
-            padding: 40px 10%;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 5% 100%, 0 70%);
+            padding: 40px 5% 80px 5%;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 70% 100%, 0 95%);
+            animation: fadeUp 0.8s ease-out;
         }
 
-        header h1 {
+        .file-meta {
             font-family: 'Teko', sans-serif;
-            font-size: 4.5rem;
-            text-transform: uppercase;
-            line-height: 0.8;
-        }
-
-        .header-subtitle {
-            font-family: 'Teko';
             font-size: 1.2rem;
-            font-weight: bold;
-            letter-spacing: 3px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
         }
 
+        .file-header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 5rem;
+            text-transform: uppercase;
+            line-height: 0.9;
+            animation: text-glitch 0.6s steps(8) 0.3s backwards;
+        }
+
+        /* =================== HERO VISUAL =================== */
+        .topic-hero-container {
+            max-width: 1200px;
+            margin: -60px auto 60px auto;
+            padding: 0 5%;
+            position: relative;
+            z-index: 10;
+            animation: fadeUp 1s ease-out 0.5s backwards;
+        }
+
+        .topic-hero {
+            height: 350px;
+            background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop') center/cover;
+            border: 3px solid var(--zzz-yellow);
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+
+        /* =================== MAIN CONTENT =================== */
         main {
-            padding: 60px 10%;
+            padding: 0 5% 60px 5%;
             max-width: 1200px;
             margin: auto;
         }
 
+        section { margin-bottom: 80px; animation: fadeUp 0.8s ease-out both; }
+
         h2 {
             font-family: 'Teko', sans-serif;
-            font-size: 3rem;
-            color: var(--zzz-yellow);
+            font-size: 3.5rem;
+            color: var(--zzz-white);
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--zzz-grey);
             display: flex;
-            align-items: center;
-            gap: 20px;
+            align-items: baseline;
+            gap: 15px;
         }
 
-        h2::before {
-            content: "";
-            width: 40px;
-            height: 40px;
-            background: var(--zzz-yellow);
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        }
+        h2 span { color: var(--zzz-yellow); font-size: 1.5rem; }
 
-        /* Grid de Componentes Internos */
+        p { margin-bottom: 25px; color: #ccc; font-size: 1.15rem; text-align: justify; }
+
+        /* =================== HARDWARE GRID =================== */
         .hardware-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            gap: 25px;
+            margin-top: 40px;
         }
 
         .component-card {
             background: var(--zzz-dark-grey);
-            border: 2px solid #333;
-            padding: 25px;
+            padding: 30px;
+            border: 1px solid var(--zzz-grey);
             position: relative;
             transition: 0.3s;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 92% 100%, 0 100%);
         }
 
         .component-card:hover {
             border-color: var(--zzz-yellow);
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(219, 253, 0, 0.1);
-        }
-
-        .component-card h3 {
-            font-family: 'Teko', sans-serif;
-            font-size: 2rem;
-            color: var(--zzz-white);
-            margin-bottom: 10px;
-            text-transform: uppercase;
+            transform: translateY(-5px);
+            background: #1a1a1a;
         }
 
         .component-card .tag {
             background: var(--zzz-yellow);
             color: var(--zzz-black);
-            font-size: 0.7rem;
-            font-weight: 800;
-            padding: 2px 8px;
+            padding: 2px 10px;
+            font-family: 'Teko';
+            font-weight: bold;
+            font-size: 0.8rem;
             position: absolute;
             top: 0; right: 0;
             text-transform: uppercase;
         }
 
-        .component-card p {
-            color: #aaa;
-            font-size: 0.95rem;
+        .component-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.2rem;
+            color: var(--zzz-white);
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
-        /* Lista de Periféricos */
-        .peripherals-list {
+        /* =================== PERIPHERALS =================== */
+        .peripherals-container {
+            background: rgba(43, 43, 43, 0.4);
+            padding: 40px;
+            border-left: 8px solid var(--zzz-yellow);
             margin-top: 40px;
-            background: #222;
-            padding: 30px;
-            border-left: 10px solid var(--zzz-yellow);
+        }
+
+        .peripherals-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 15px;
+            margin-top: 20px;
         }
 
         .peripheral-item {
             background: var(--zzz-black);
-            padding: 10px 20px;
+            border: 1px solid var(--zzz-grey);
+            padding: 10px 25px;
             font-family: 'Teko';
-            font-size: 1.4rem;
-            text-transform: uppercase;
-            border: 1px solid #444;
-        }
-
-        .warning-box {
-            background: var(--zzz-danger);
-            color: white;
-            padding: 20px;
-            margin: 40px 0;
-            font-weight: bold;
-            clip-path: polygon(2% 0%, 100% 0%, 98% 100%, 0% 100%);
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 50px;
-            background: var(--zzz-white);
-            color: var(--zzz-black);
-            padding: 15px 45px;
-            text-decoration: none;
-            font-family: 'Teko', sans-serif;
             font-size: 1.5rem;
-            font-weight: bold;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            color: var(--zzz-yellow);
+            text-transform: uppercase;
             transition: 0.3s;
         }
 
-        .back-btn:hover {
+        .peripheral-item:hover {
             background: var(--zzz-yellow);
-            transform: skewX(-5deg);
+            color: var(--zzz-black);
+            transform: skewX(-10deg);
+        }
+
+        /* =================== WARNING BOX =================== */
+        .warning-box {
+            background: var(--zzz-danger);
+            color: white;
+            padding: 30px;
+            margin: 50px 0;
+            font-weight: 800;
+            text-transform: uppercase;
+            clip-path: polygon(2% 0%, 100% 0%, 98% 100%, 0% 100%);
+            box-shadow: 10px 10px 0px rgba(255, 69, 69, 0.2);
+            animation: text-glitch 2s infinite steps(2);
+        }
+
+        /* =================== BUTTON & FOOTER =================== */
+        .back-btn-container { text-align: center; margin: 80px 0; }
+        
+        .back-btn {
+            display: inline-block; padding: 15px 50px;
+            background: var(--zzz-yellow); color: var(--zzz-black);
+            text-decoration: none; font-family: 'Teko', sans-serif;
+            font-size: 1.8rem; font-weight: bold; text-transform: uppercase;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background: var(--zzz-white);
+            transform: scale(1.05); box-shadow: 0 0 20px var(--zzz-yellow);
+        }
+
+        footer {
+            background: var(--zzz-dark-grey); color: #555;
+            text-align: center; padding: 40px; font-family: 'Teko', sans-serif;
+            border-top: 2px solid var(--zzz-grey);
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="header-subtitle">ESTRUTURA FÍSICA // HARDWARE_DE_BASE</div>
+<header class="file-header">
+    <div class="file-meta">
+        <span>[ HARDWARE_SPEC // V2 ]</span>
+        <span>ID: HW_UNIT_03</span>
+    </div>
     <h1>Componentes de Sistema</h1>
+    <div style="font-family: 'Inter'; font-weight: 600; text-transform: uppercase; font-size: 0.9rem; opacity: 0.7; margin-top: 10px;">
+        Protocolo Físico // Estrutura de Máquina // Arquivo 03
+    </div>
 </header>
+
+<div class="topic-hero-container">
+    <div class="topic-hero"></div>
+</div>
 
 <main>
     <section>
-        <h2>Anatomia da Máquina</h2>
-        <p>O <strong>Hardware</strong> constitui todos os elementos físicos e palpáveis de um sistema informático. É o "corpo" do computador, sem o qual o software não teria onde ser executado. Cada componente desempenha um papel vital no processamento de dados.</p>
+        <h2>Anatomia da Máquina <span>[01]</span></h2>
+        <p>O <strong>Hardware</strong> constitui todos os elementos físicos e palpáveis de um sistema informático. É o "chassi" onde a inteligência do software opera. Sem uma infraestrutura física robusta, o código não tem base para execução. Cada componente abaixo é um elo vital na cadeia de processamento.</p>
         
         <div class="hardware-grid">
             <div class="component-card">
-                <span class="tag">Processamento</span>
+                <span class="tag">Central Unit</span>
                 <h3>CPU</h3>
-                <p>A Unidade Central de Processamento é o "cérebro". Executa todos os cálculos e coordena as instruções enviadas pelo software.</p>
+                <p>O processador central. Executa biliões de operações por segundo, agindo como o motor lógico de todo o sistema.</p>
             </div>
 
             <div class="component-card">
-                <span class="tag">Memória Curta</span>
+                <span class="tag">Volatile Data</span>
                 <h3>RAM</h3>
-                <p>Memória de acesso rápido que armazena dados temporários enquanto o computador está ligado. Crucial para o multitasking.</p>
+                <p>Memória de acesso aleatório. Armazena os dados de curto prazo para que a CPU os aceda instantaneamente.</p>
             </div>
 
             <div class="component-card">
-                <span class="tag">Armazenamento</span>
+                <span class="tag">Mass Storage</span>
                 <h3>SSD / HDD</h3>
-                <p>Onde os teus ficheiros moram permanentemente. O SSD é a tecnologia moderna, muito mais rápida que os discos rígidos (HDD).</p>
+                <p>Unidades de armazenamento persistente. Onde o sistema operativo e os teus ficheiros residem permanentemente.</p>
             </div>
 
             <div class="component-card">
-                <span class="tag">Fundação</span>
+                <span class="tag">Core Link</span>
                 <h3>Motherboard</h3>
-                <p>A placa principal que liga todos os componentes, permitindo que a CPU, RAM e discos comuniquem entre si.</p>
+                <p>A placa-mãe. O sistema nervoso central que interliga todos os componentes através de barramentos de dados.</p>
             </div>
         </div>
     </section>
 
-    
+    <div style="background: var(--zzz-grey); padding: 5px; clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px); margin: 40px 0;">
+        <img src="https://images.unsplash.com/photo-1591405351990-4726e331f141?q=80&w=2070&auto=format&fit=crop" alt="Internal Components" style="width:100%; height:400px; object-fit:cover; display:block; filter: grayscale(100%) contrast(1.2) brightness(0.8);">
+    </div>
 
     <section>
-        <h2>Unidades de Entrada e Saída (Periféricos)</h2>
-        <p>Os periféricos são a nossa interface de comunicação com o hardware interno. Permitem-nos enviar comandos e receber resultados visuais ou sonoros.</p>
+        <h2>Interfaces de Entrada/Saída <span>[02]</span></h2>
+        <p>Os periféricos são os pontos de contacto entre o humano e a máquina. Através deles, traduzimos ações físicas em impulsos digitais e recebemos o feedback visual ou auditivo do processamento.</p>
         
-        <div class="peripherals-list">
-            <div class="peripheral-item">Monitor</div>
-            <div class="peripheral-item">Teclado</div>
-            <div class="peripheral-item">Rato</div>
-            <div class="peripheral-item">Impressora</div>
-            <div class="peripheral-item">Webcam</div>
+        <div class="peripherals-container">
+            <h3 style="font-family: 'Teko'; font-size: 2rem; text-transform: uppercase;">Arsenal de Periféricos Detetado:</h3>
+            <div class="peripherals-list">
+                <div class="peripheral-item">Monitor OLED</div>
+                <div class="peripheral-item">Teclado Mecânico</div>
+                <div class="peripheral-item">Rato Óptico</div>
+                <div class="peripheral-item">Impressora 3D</div>
+                <div class="peripheral-item">Webcam 4K</div>
+                <div class="peripheral-item">Audio System</div>
+            </div>
         </div>
 
         <div class="warning-box">
-            ATENÇÃO: Nunca manipules o hardware interno (especialmente a fonte de alimentação) sem garantir que o sistema está totalmente desligado da corrente elétrica.
+            [ ! ] ALERTA TÉCNICO: Nunca abra a fonte de alimentação (PSU) ou manipule componentes internos sem proteção anti-estática. Risco de descarga elétrica fatal ou dano irreversível ao circuito.
         </div>
     </section>
 
-    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    <div class="back-btn-container">
+        <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    </div>
 </main>
 
 <footer>
-    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
-        REGISTO TÉCNICO // HARDWARE_ANALYSIS_V2
-    </div>
+    REGISTO_HARDWARE_V2 // SYSTEM_LOG // TERMINAR SESSÃO
 </footer>
 
 </body>
