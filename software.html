@@ -3,260 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Software | Arquitetura Lógica</title>
+    <title>Software // Arquitetura Lógica</title>
+
+       
+<link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
+        /* =================== CONFIGURAÇÃO BASE =================== */
         :root {
             --zzz-yellow: #dbfd00;
             --zzz-black: #0a0a0a;
-            --zzz-dark: #121212;
+            --zzz-dark: #0f0f0f;
             --zzz-white: #ffffff;
             --zzz-blue: #00e5ff;
+            --zzz-blue-dark: #008fa0;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--zzz-black);
             color: var(--zzz-white);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Efeito de interface de terminal */
+        /* Efeito de Scanlines e Ruído Digital */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.1) 50%),
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.02));
-            background-size: 100% 4px, 3px 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                        repeating-linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.01));
+            background-size: 100% 2px, 3px 100%;
             pointer-events: none;
-            z-index: 100;
+            z-index: 999;
         }
 
+        /* =================== ANIMAÇÕES =================== */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px var(--zzz-blue); }
+            50% { box-shadow: 0 0 20px var(--zzz-blue); }
+            100% { box-shadow: 0 0 5px var(--zzz-blue); }
+        }
+
+        /* =================== HEADER =================== */
         header {
             background: var(--zzz-yellow);
             color: var(--zzz-black);
-            padding: 50px 10%;
-            clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
+            padding: 60px 10%;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 95% 100%, 0 100%);
         }
 
         header h1 {
             font-family: 'Teko', sans-serif;
-            font-size: 4.5rem;
+            font-size: 5rem;
             text-transform: uppercase;
             line-height: 0.8;
+            margin-top: 10px;
         }
 
         .sys-tag {
             font-family: 'Teko';
             background: black;
             color: var(--zzz-yellow);
-            padding: 2px 10px;
-            font-size: 1rem;
+            padding: 4px 15px;
+            font-size: 1.2rem;
             display: inline-block;
-            margin-bottom: 10px;
+            letter-spacing: 2px;
         }
 
+        /* =================== HERO VISUAL =================== */
+        .software-hero {
+            width: 100%;
+            height: 400px;
+            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop') center/cover;
+            border-bottom: 4px solid var(--zzz-blue);
+            position: relative;
+            filter: saturate(0.5) brightness(0.7);
+        }
+
+        .software-hero::after {
+            content: "EXECUTING_LOGIC_STREAM...";
+            position: absolute;
+            bottom: 20px;
+            right: 10%;
+            font-family: 'Teko';
+            color: var(--zzz-blue);
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+        }
+
+        /* =================== CONTENT =================== */
         main {
-            padding: 60px 10%;
-            max-width: 1200px;
+            padding: 80px 10%;
+            max-width: 1300px;
             margin: auto;
         }
 
         h2 {
             font-family: 'Teko', sans-serif;
-            font-size: 3rem;
-            color: var(--zzz-yellow);
+            font-size: 3.5rem;
+            color: var(--zzz-blue);
             text-transform: uppercase;
             margin-bottom: 30px;
-            border-left: 10px solid var(--zzz-yellow);
-            padding-left: 20px;
+            border-left: 15px solid var(--zzz-blue);
+            padding-left: 25px;
+            animation: slideIn 0.6s ease-out;
         }
 
-        /* Grid de Categorias */
+        p { margin-bottom: 30px; color: #ccc; font-size: 1.2rem; max-width: 800px; }
+
+        /* =================== CATEGORY GRID =================== */
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
         }
 
         .category-card {
-            background: var(--zzz-dark);
-            border: 1px solid #333;
-            padding: 30px;
+            background: rgba(15, 15, 15, 0.8);
+            border: 1px solid #222;
+            padding: 40px;
             position: relative;
-            transition: 0.3s;
+            transition: 0.4s;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--zzz-blue);
+            transform: scaleX(0);
+            transition: 0.4s;
+            transform-origin: left;
         }
 
         .category-card:hover {
             border-color: var(--zzz-blue);
-            transform: translateY(-5px);
+            background: #161616;
+            transform: translateY(-10px);
         }
+
+        .category-card:hover::before { transform: scaleX(1); }
 
         .category-card h3 {
             font-family: 'Teko';
-            font-size: 2rem;
-            color: var(--zzz-blue);
-            margin-bottom: 15px;
+            font-size: 2.5rem;
+            color: var(--zzz-white);
+            margin-bottom: 20px;
             text-transform: uppercase;
         }
 
-        .category-card ul {
-            list-style: none;
-            margin-top: 15px;
-        }
+        .category-card p { font-size: 1rem; color: #888; margin-bottom: 20px; }
+
+        .category-card ul { list-style: none; }
 
         .category-card li {
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-            color: #bbb;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--zzz-blue);
+            font-family: 'Teko';
+            text-transform: uppercase;
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 10px;
         }
 
         .category-card li::before {
-            content: ">>";
-            color: var(--zzz-blue);
-            font-family: 'Teko';
+            content: "⚡";
+            margin-right: 10px;
+            font-size: 0.8rem;
         }
 
-        /* Secção de Licenciamento */
+        /* =================== LICENSING BOX =================== */
         .license-box {
             background: var(--zzz-white);
             color: var(--zzz-black);
-            padding: 40px;
-            margin-top: 50px;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+            padding: 60px 10%;
+            margin: 100px -11.2% 100px -11.2%; /* Estende para fora do container */
+            transform: rotate(-1deg);
         }
+
+        .license-box > * { transform: rotate(1deg); }
 
         .license-box h3 {
             font-family: 'Teko';
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             text-transform: uppercase;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            background: var(--zzz-black);
+            color: var(--zzz-white);
+            display: inline-block;
+            padding: 0 30px;
         }
 
         .license-types {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .license-item {
-            flex: 1;
-            min-width: 250px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
         }
 
         .license-item strong {
             display: block;
-            font-size: 1.2rem;
-            border-bottom: 2px solid var(--zzz-black);
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-family: 'Teko';
+            border-bottom: 4px solid var(--zzz-black);
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
+        /* =================== SaaS SECTION =================== */
+        .saas-feature {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            background: linear-gradient(90deg, #111, #000);
+            padding: 40px;
+            border-right: 10px solid var(--zzz-blue);
+            margin: 80px 0;
+            flex-wrap: wrap;
+        }
+
+        .saas-img {
+            flex: 1;
+            min-width: 300px;
+            height: 250px;
+            background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop') center/cover;
+            border: 1px solid var(--zzz-blue);
+            animation: pulse 3s infinite;
+        }
+
+        .saas-text { flex: 2; min-width: 300px; }
+
+        /* =================== BUTTON =================== */
         .back-btn {
             display: inline-block;
-            margin-top: 50px;
-            background: var(--zzz-yellow);
+            background: var(--zzz-blue);
             color: var(--zzz-black);
-            padding: 15px 45px;
+            padding: 20px 60px;
             text-decoration: none;
             font-family: 'Teko', sans-serif;
-            font-size: 1.6rem;
+            font-size: 2rem;
             font-weight: bold;
-            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
             transition: 0.3s;
+            margin: 50px 0;
         }
 
         .back-btn:hover {
-            filter: brightness(1.1);
-            padding-left: 60px;
+            background: var(--zzz-white);
+            transform: skewX(-5deg);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
         }
 
+        footer {
+            text-align: center;
+            padding: 60px;
+            background: #050505;
+            color: #444;
+            font-family: 'Teko';
+            font-size: 1.5rem;
+            border-top: 1px solid #111;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="sys-tag">LOGIC_KERNEL // VERSION_4.0</div>
+    <div class="sys-tag">LOGIC_KERNEL // CORE_INFO</div>
     <h1>Conceitos de Software</h1>
 </header>
+
+<div class="software-hero"></div>
 
 <main>
     <section>
         <h2>A Inteligência do Sistema</h2>
-        <p>Ao contrário do Hardware, o <strong>Software</strong> é a parte imaterial (lógica) do computador. Consiste num conjunto de programas, dados e instruções que permitem ao utilizador interagir com a máquina e realizar tarefas específicas. É a ponte entre as tuas intenções e a resposta física dos componentes.</p>
+        <p>Ao contrário do Hardware, o <strong>Software</strong> é a alma digital do computador. É um ecossistema complexo de algoritmos e instruções que ditam como a matéria deve comportar-se. É a camada invisível que transforma eletricidade em produtividade, arte e comunicação.</p>
         
         <div class="category-grid">
             <div class="category-card">
                 <h3>Software de Sistema</h3>
-                <p>É a base indispensável. Gere o hardware e fornece uma plataforma para outros programas funcionarem.</p>
+                <p>O alicerce. Sem ele, o hardware é apenas metal inerte. Controla os recursos mais básicos da máquina.</p>
                 <ul>
-                    <li>Sistemas Operativos (Windows, macOS, Linux)</li>
-                    <li>Drivers (Controladores de dispositivos)</li>
-                    <li>Firmware (Software embebido em hardware)</li>
+                    <li>Sistemas Operativos</li>
+                    <li>Kernel & Drivers</li>
+                    <li>Bios / UEFI Firmware</li>
                 </ul>
             </div>
 
-            <div class="category-card">
+            <div class="category-card" style="border-color: #333;">
                 <h3>Software de Aplicação</h3>
-                <p>Programas desenhados para que o utilizador execute tarefas produtivas ou de lazer.</p>
+                <p>A camada do utilizador. Ferramentas construídas para expandir as capacidades humanas e realizar tarefas.</p>
                 <ul>
-                    <li>Processadores de Texto (Word)</li>
-                    <li>Navegadores de Internet (Chrome)</li>
-                    <li>Jogos e Editores de Imagem</li>
+                    <li>Creative Suites</li>
+                    <li>Web Browsers</li>
+                    <li>Gaming Engines</li>
                 </ul>
             </div>
 
             <div class="category-card">
                 <h3>Software Utilitário</h3>
-                <p>Ferramentas focadas na manutenção, otimização e proteção do próprio sistema.</p>
+                <p>Os operários de manutenção. Garantem que o ecossistema digital permanece seguro, limpo e otimizado.</p>
                 <ul>
-                    <li>Antivírus e Firewalls</li>
-                    <li>Compressores de Ficheiros (WinRAR)</li>
-                    <li>Ferramentas de Desfragmentação</li>
+                    <li>Security Firewalls</li>
+                    <li>Data Compressors</li>
+                    <li>System Optimizers</li>
                 </ul>
             </div>
         </div>
     </section>
 
+    
+
     <section>
         <div class="license-box">
-            <h3>Protocolos de Licenciamento</h3>
+            <div style="text-align:center;">
+                <h3>Protocolos de Licenciamento</h3>
+            </div>
             <div class="license-types">
                 <div class="license-item">
-                    <strong>Proprietário (Comercial)</strong>
-                    O código é privado e o uso requer o pagamento de uma licença. Exemplo: Microsoft Windows, Adobe Photoshop.
+                    <strong>Proprietário</strong>
+                    Direitos restritos. O código é um segredo comercial. O uso é concedido sob termos rígidos.
                 </div>
                 <div class="license-item">
-                    <strong>Open Source (Código Aberto)</strong>
-                    O código é público e pode ser modificado e partilhado livremente pela comunidade. Exemplo: Linux, LibreOffice.
+                    <strong>Open Source</strong>
+                    Liberdade total. O código pertence à comunidade. Transparência e colaboração global.
                 </div>
                 <div class="license-item">
-                    <strong>Freeware / Shareware</strong>
-                    Software gratuito para uso, mas o código permanece fechado. O Shareware oferece um período de teste gratuito.
+                    <strong>Freeware</strong>
+                    Acesso gratuito ao binário, mas a "receita" (código) permanece oculta e protegida.
                 </div>
             </div>
         </div>
     </section>
 
-    <section style="margin-top: 50px;">
+    <section>
         <h2>A Era da Nuvem (SaaS)</h2>
-        <p>A tendência moderna do software é o <strong>Software as a Service (SaaS)</strong>. Em vez de instalares o programa no teu disco rígido, acedes a ele através de um browser. Isto permite atualizações automáticas e acesso aos teus dados a partir de qualquer dispositivo com Internet.</p>
+        <div class="saas-feature">
+            <div class="saas-img"></div>
+            <div class="saas-text">
+                <p>O conceito de software evoluiu. Com o <strong>Software as a Service (SaaS)</strong>, a barreira do hardware local foi quebrada. O processamento acontece em servidores remotos, e a interface chega até ti via browser. É a liquidez total da informação: disponível em qualquer lugar, em qualquer ecrã, a qualquer segundo.</p>
+            </div>
+        </div>
     </section>
 
-    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    <div style="text-align: center;">
+        <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    </div>
 </main>
 
 <footer>
-    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
-        LOGIC_ARCH_DATABASE // END_OF_FILE
-    </div>
+    LOGIC_ARCH_DATABASE // 2026 // ENCRYPTED_ACCESS_ONLY
 </footer>
 
 </body>
