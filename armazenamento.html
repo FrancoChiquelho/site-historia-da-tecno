@@ -3,225 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Armazenamento | Gestão de Memória</title>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title> // Storage Log // Gestão de Memória</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    
     <style>
+        /* =================== CONFIGURAÇÃO BASE (PADRÃO HUB) =================== */
         :root {
             --zzz-yellow: #dbfd00;
             --zzz-black: #0a0a0a;
-            --zzz-dark: #121212;
+            --zzz-dark-grey: #141414;
+            --zzz-grey: #2b2b2b;
             --zzz-white: #ffffff;
+            --zzz-danger: #ff2a2a;
+            --glitch-red: rgba(255, 0, 80, 0.8);
+            --glitch-blue: rgba(0, 255, 255, 0.8);
+            --neon-blue: #00f3ff;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--zzz-black);
             color: var(--zzz-white);
+            background-color: #050505;
+            overflow-x: hidden;
+            /* Grid Background Pattern */
+            background-image: 
+                linear-gradient(rgba(5,5,5,0.97), rgba(5,5,5,0.97)),
+                linear-gradient(0deg, rgba(219, 253, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(219, 253, 0, 0.1) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
             line-height: 1.6;
         }
 
-        /* Efeito de scanline */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 100% 3px;
-            pointer-events: none;
-            z-index: 100;
+        /* Scanlines Effect */
+        body::after {
+            content: " ";
+            display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            z-index: 9990; pointer-events: none;
         }
 
-        header {
+        /* =================== ANIMAÇÕES =================== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(50px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes text-glitch {
+            0% { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); transform: translate(-2px, 0); }
+            20% { clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%); transform: translate(2px, 0); }
+            40% { clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%); transform: translate(0, 5px); }
+            100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: translate(0, 0); }
+        }
+
+        /* =================== HEADER =================== */
+        .file-header {
             background: var(--zzz-yellow);
             color: var(--zzz-black);
-            padding: 50px 10%;
-            clip-path: polygon(0 0, 100% 0, 100% 70%, 98% 100%, 0 100%);
+            padding: 50px 5% 100px 5%;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        header h1 {
-            font-family: 'Teko', sans-serif;
-            font-size: 4.5rem;
-            text-transform: uppercase;
-            line-height: 0.8;
+        .file-meta {
+            font-family: 'Teko', sans-serif; font-size: 1.3rem; font-weight: 700;
+            display: flex; justify-content: space-between;
+            border-bottom: 2px solid rgba(0,0,0,0.1); margin-bottom: 15px;
         }
 
-        .status-bar {
-            font-family: 'Teko';
-            font-size: 1.2rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .file-header h1 {
+            font-family: 'Teko', sans-serif; font-size: 5.5rem;
+            text-transform: uppercase; line-height: 0.8; position: relative;
         }
 
-        main {
-            padding: 60px 10%;
-            max-width: 1200px;
-            margin: auto;
+        .file-header h1::before, .file-header h1::after {
+            content: "STORAGE_LOG";
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8;
         }
+        .file-header h1::after { color: var(--glitch-red); z-index: -1; animation: text-glitch 2.5s infinite linear alternate-reverse; left: 2px; }
+        .file-header h1::before { color: var(--glitch-blue); z-index: -2; animation: text-glitch 3s infinite linear alternate-reverse; left: -2px; }
+
+        /* =================== CONTEÚDO =================== */
+        main { padding: 80px 5% 100px 5%; max-width: 1300px; margin: auto; }
+
+        section { 
+            margin-bottom: 120px; opacity: 0; 
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+        }
+        section:nth-of-type(1) { animation-delay: 0.4s; }
+        section:nth-of-type(2) { animation-delay: 0.6s; }
 
         h2 {
-            font-family: 'Teko', sans-serif;
-            font-size: 2.8rem;
-            color: var(--zzz-yellow);
-            text-transform: uppercase;
-            margin: 40px 0 20px;
-            display: flex;
-            align-items: center;
+            font-family: 'Teko', sans-serif; font-size: 4rem;
+            text-transform: uppercase; border-left: 15px solid var(--zzz-yellow);
+            padding-left: 25px; margin-bottom: 40px; color: var(--zzz-white);
         }
+        h2 span { font-size: 1.5rem; color: var(--zzz-yellow); vertical-align: middle; margin-left: 10px; }
 
-        h2::after {
-            content: "";
-            height: 2px;
-            background: #333;
-            flex-grow: 1;
-            margin-left: 20px;
-        }
-
-        /* Container de Unidades de Medida */
-        .units-box {
-            background: #1a1a1a;
-            border: 2px solid var(--zzz-yellow);
-            padding: 30px;
+        /* === UNIDADES DE MEDIDA (UNITS GRID) === */
+        .units-matrix {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
-        .unit-item {
-            border-right: 1px solid #333;
-        }
-
-        .unit-item:last-child { border: none; }
-
-        .unit-item span {
-            display: block;
-            font-family: 'Teko';
-            font-size: 2rem;
-            color: var(--zzz-yellow);
-        }
-
-        /* Cards de Hardware de Armazenamento */
-        .storage-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .storage-card {
-            background: white;
-            color: black;
+        .unit-card {
+            background: var(--zzz-dark-grey);
+            border: 1px solid var(--zzz-grey);
             padding: 30px;
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+            text-align: center;
             transition: 0.3s;
         }
 
-        .storage-card:hover {
-            transform: translateY(-10px);
-            background: var(--zzz-yellow);
+        .unit-card:hover { border-color: var(--zzz-yellow); background: #1a1a1a; }
+
+        .unit-card span {
+            display: block; font-family: 'Teko'; font-size: 3rem;
+            color: var(--zzz-yellow); line-height: 1;
         }
 
-        .storage-card h3 {
-            font-family: 'Teko';
-            font-size: 2.2rem;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+        .unit-card label {
+            font-family: 'Fira Code', monospace; font-size: 0.8rem;
+            color: #666; text-transform: uppercase;
         }
 
-        /* Backup Alert Section */
-        .backup-section {
-            background: #ff4545;
-            color: white;
+        /* === HARDWARE CARDS === */
+        .storage-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+        }
+
+        .cmd-card {
+            background: #111;
+            border: 1px solid #333;
             padding: 30px;
-            margin: 50px 0;
-            text-transform: uppercase;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            clip-path: polygon(2% 0%, 100% 0%, 98% 100%, 0% 100%);
+            position: relative;
+            transition: 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%);
         }
 
-        .backup-section i { font-size: 3rem; }
+        .cmd-card:hover { border-color: var(--neon-blue); transform: translateY(-5px); }
+        .cmd-card::before { content: "MODULE_ID"; position: absolute; top: 10px; right: 15px; color: #333; font-family: 'Teko'; font-size: 1rem; letter-spacing: 2px;}
 
+        .cmd-title {
+            display: block; font-family: 'Teko', sans-serif;
+            color: var(--zzz-yellow); font-size: 2.2rem;
+            border-bottom: 1px solid var(--zzz-grey);
+            margin-bottom: 15px; text-transform: uppercase;
+        }
+
+        .cmd-desc { font-size: 1rem; color: #aaa; }
+
+        /* === BARRA DE CAPACIDADE === */
+        .capacity-viz {
+            margin: 40px 0; background: #111; padding: 20px;
+            border-left: 4px solid var(--neon-blue);
+        }
+        .progress-container {
+            width: 100%; height: 20px; background: #222; margin-top: 10px;
+            position: relative; overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%; background: var(--zzz-yellow); width: 75%;
+            box-shadow: 0 0 15px var(--zzz-yellow);
+        }
+
+        /* === ALERTA DE SEGURANÇA (BACKUP) === */
+        .error-zone {
+            margin-top: 80px;
+            border: 2px solid var(--zzz-danger);
+            background: rgba(255, 42, 42, 0.05);
+            padding: 30px;
+            display: flex; align-items: center; gap: 20px;
+            clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+        }
+        .error-icon { font-size: 3.5rem; color: var(--zzz-danger); animation: text-glitch 2s infinite; }
+
+        /* Botão Voltar */
+        .btn-zone { text-align: center; margin: 100px 0; }
         .back-btn {
-            display: inline-block;
-            margin-top: 40px;
-            background: var(--zzz-white);
-            color: var(--zzz-black);
-            padding: 15px 45px;
-            text-decoration: none;
-            font-family: 'Teko', sans-serif;
-            font-size: 1.6rem;
-            font-weight: bold;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            display: inline-block; padding: 20px 60px;
+            background: var(--zzz-yellow); color: var(--zzz-black);
+            text-decoration: none; font-family: 'Teko', sans-serif;
+            font-size: 2rem; font-weight: bold; text-transform: uppercase;
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+            transition: 0.4s;
         }
+        .back-btn:hover { background: var(--zzz-white); box-shadow: 0 0 30px var(--zzz-yellow); }
 
-        .back-btn:hover { background: var(--zzz-yellow); }
-
+        footer {
+            background: var(--zzz-black); color: #444; text-align: center;
+            padding: 50px; font-family: 'Teko'; border-top: 1px solid #111;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="status-bar">SISTEMA DE DADOS // CAPACIDADE_MAX</div>
-    <h1>08. Armazenamento</h1>
+<header class="file-header">
+    <div class="file-meta">
+        <span>[ ARCHIVE_CORE // VOL_08 ]</span>
+        <span>DRIVE_HEALTH: OPTIMAL</span>
+    </div>
+    <h1>STORAGE_LOG</h1>
+    <div style="font-family: 'Teko'; font-size: 1.5rem; opacity: 0.6;">/// GESTÃO DE MEMÓRIA & ACERVO DIGITAL</div>
 </header>
 
 <main>
     <section>
-        <h2>Unidades de Medida Digital</h2>
-        <p>Para entender o armazenamento, precisamos de saber como a informação é medida. Tudo começa com o <strong>Bit</strong> (0 ou 1), mas no dia a dia usamos unidades maiores:</p>
+        <h2>Matriz de Escala <span>[UNITS]</span></h2>
+        <p>A informação digital é quantificada através de estados binários (Bits). Para volumes de dados massivos, utilizamos prefixos de escala para definir a capacidade de armazenamento.</p>
         
-        <div class="units-box">
-            <div class="unit-item"><span>1 KB</span>Kilobyte</div>
-            <div class="unit-item"><span>1 MB</span>Megabyte</div>
-            <div class="unit-item"><span>1 GB</span>Gigabyte</div>
-            <div class="unit-item"><span>1 TB</span>Terabyte</div>
+        <div class="units-matrix">
+            <div class="unit-card">
+                <span>1 KB</span>
+                <label>Kilobyte (1024 B)</label>
+            </div>
+            <div class="unit-card">
+                <span>1 MB</span>
+                <label>Megabyte (1024 KB)</label>
+            </div>
+            <div class="unit-card">
+                <span>1 GB</span>
+                <label>Gigabyte (1024 MB)</label>
+            </div>
+            <div class="unit-card">
+                <span>1 TB</span>
+                <label>Terabyte (1024 GB)</label>
+            </div>
         </div>
     </section>
+
+    
 
     <section>
-        <h2>Meios de Armazenamento</h2>
+        <h2>Módulos de Hardware <span>[DEVICES]</span></h2>
+        <p>Diferentes tecnologias para diferentes necessidades de velocidade e volume.</p>
+        
         <div class="storage-grid">
-            <div class="storage-card">
-                <h3>SSD (Sólido)</h3>
-                <p>A tecnologia mais rápida atualmente. Não tem peças móveis, o que o torna resistente e extremamente veloz a carregar o Sistema Operativo e jogos.</p>
+            <div class="cmd-card">
+                <span class="cmd-title">SSD_SOLID_STATE</span>
+                <div class="cmd-desc">Tecnologia baseada em memória Flash. Sem componentes mecânicos. Alta velocidade de I/O (Input/Output). Ideal para Sistemas Operativos.</div>
             </div>
-            <div class="storage-card">
-                <h3>HDD (Rígido)</h3>
-                <p>O disco tradicional. Usa pratos magnéticos que giram. É mais lento que o SSD, mas oferece muito mais espaço por um preço menor.</p>
+            
+            <div class="cmd-card">
+                <span class="cmd-title">HDD_MAGNETIC</span>
+                <div class="cmd-desc">Armazenamento em discos magnéticos rotativos. Velocidade inferior, mas rácio custo/capacidade superior. Ideal para backups massivos.</div>
             </div>
-            <div class="storage-card">
-                <h3>Cloud (Nuvem)</h3>
-                <p>Armazenamento em servidores remotos acessíveis pela Internet. Exemplos: Google Drive, OneDrive e iCloud. Permite aceder aos ficheiros em qualquer lugar.</p>
+
+            <div class="cmd-card">
+                <span class="cmd-title">CLOUD_STORAGE</span>
+                <div class="cmd-desc">Arquitetura de rede distribuída. Dados armazenados em clusters remotos (Datacenters) acessíveis via protocolo TCP/IP.</div>
+            </div>
+        </div>
+
+        <div class="capacity-viz">
+            <div style="font-family: 'Teko'; font-size: 1.2rem; color: var(--neon-blue);">TOTAL_CAPACITY_USAGE</div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-family:'Fira Code'; font-size:0.8rem; margin-top:5px; color:#555;">
+                <span>750 GB USED</span>
+                <span>1 TB TOTAL</span>
             </div>
         </div>
     </section>
 
-    <div class="backup-section">
-        <div style="font-size: 3rem;">⚠</div>
+    <div class="error-zone">
+        <div class="error-icon">⚠</div>
         <div>
-            <strong>Regra de Ouro do Backup:</strong>
-            Quem tem apenas uma cópia, não tem nenhuma. Mantém sempre os teus dados importantes em pelo menos dois locais diferentes (ex: PC + Nuvem).
+            <h3 style="font-family:'Teko'; color:var(--zzz-danger); font-size:1.8rem;">CRITICAL_PROTOCOL: REDUNDANCY_REQUIRED</h3>
+            <p style="margin:0; font-size:0.9rem; color: #ff8888;">Regra 3-2-1: Mantém sempre 3 cópias dos dados, em 2 suportes diferentes, com 1 fora do local. Backup não é opcional.</p>
         </div>
     </div>
 
-    <section>
-        <h2>Segurança e Manutenção</h2>
-        <p>O armazenamento não é eterno. Discos rígidos podem falhar mecanicamente e SSDs têm um ciclo de vida de escrita. É fundamental monitorizar a "saúde" dos discos e evitar movimentos bruscos em computadores portáteis enquanto o HDD está a ler dados.</p>
-    </section>
-
-    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    <div class="btn-zone">
+        <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    </div>
 </main>
 
 <footer>
-    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
-        DATA_STORAGE_V2 // ACERVO_DIGITAL
-    </div>
+    DATA_STORAGE_V2 // SYSTEM_INDEX_STABLE // [EOF]
 </footer>
 
 </body>
