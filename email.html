@@ -3,208 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email | Protocolo de Transmissão</title>
+    <title> // Protocolo Email //</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
+        /* =================== CONFIGURAÇÃO BASE (Tema Cyberpunk) =================== */
         :root {
             --zzz-yellow: #dbfd00;
             --zzz-black: #0a0a0a;
-            --zzz-dark: #181818;
+            --zzz-dark-grey: #141414;
+            --zzz-grey: #2b2b2b;
             --zzz-white: #ffffff;
-            --zzz-grey: #444;
+            --zzz-danger: #ff2a2a;
+            --glitch-red: rgba(255, 0, 80, 0.8);
+            --glitch-blue: rgba(0, 255, 255, 0.8);
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--zzz-black);
             color: var(--zzz-white);
+            background-color: #050505;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(10,10,10,0.95), rgba(10,10,10,0.95)),
+                repeating-linear-gradient(0deg, #111 0, #111 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, #111 0, #111 1px, transparent 1px, transparent 40px);
             line-height: 1.6;
         }
 
-        /* Efeito de Overlay Digital */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(90deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 40px);
-            pointer-events: none;
-            z-index: 100;
+        /* Scanlines */
+        body::after {
+            content: " ";
+            display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            z-index: 9990; pointer-events: none;
+            animation: scanlineMove 10s linear infinite;
         }
 
-        header {
-            background: var(--zzz-white);
-            color: var(--zzz-black);
-            padding: 50px 10%;
-            border-bottom: 10px solid var(--zzz-yellow);
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%);
+        /* =================== ANIMAÇÕES =================== */
+        @keyframes scanlineMove { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(50px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
-        header h1 {
-            font-family: 'Teko', sans-serif;
-            font-size: 4.5rem;
-            text-transform: uppercase;
-            line-height: 0.8;
+        @keyframes text-glitch {
+            0% { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); transform: translate(-2px, 0); }
+            20% { clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%); transform: translate(2px, 0); }
+            40% { clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%); transform: translate(0, 5px); }
+            100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: translate(0, 0); }
         }
 
-        .comm-status {
-            font-family: 'Teko';
-            font-size: 1.2rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: #666;
+        @keyframes hero-cycle {
+            0%, 100% { filter: grayscale(100%) contrast(1.2); }
+            50% { filter: grayscale(0%) sepia(20%) hue-rotate(190deg); } /* Hue alterado para azulado/email */
         }
 
-        main {
-            padding: 60px 10%;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        h2 {
-            font-family: 'Teko', sans-serif;
-            font-size: 2.8rem;
-            color: var(--zzz-yellow);
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        /* Estrutura do Email */
-        .email-structure {
-            background: var(--zzz-dark);
-            border: 1px solid var(--zzz-grey);
-            padding: 30px;
-            margin-bottom: 50px;
-        }
-
-        .field-box {
-            border-bottom: 1px solid #333;
-            padding: 10px 0;
-            display: flex;
-            gap: 20px;
-        }
-
-        .field-label {
-            font-family: 'Teko';
-            color: var(--zzz-yellow);
-            min-width: 80px;
-            font-size: 1.2rem;
-        }
-
-        /* Grid de Boas Práticas */
-        .etiquette-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .etiquette-card {
-            background: #222;
-            padding: 25px;
-            border-top: 4px solid var(--zzz-yellow);
-            transition: 0.3s;
-        }
-
-        .etiquette-card:hover {
+        /* =================== HEADER =================== */
+        .file-header {
             background: var(--zzz-yellow);
             color: var(--zzz-black);
+            padding: 50px 5% 100px 5%;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        .etiquette-card h3 {
-            font-family: 'Teko';
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+        .file-meta {
+            font-family: 'Teko', sans-serif; font-size: 1.3rem; font-weight: 700;
+            display: flex; justify-content: space-between;
+            border-bottom: 2px solid rgba(0,0,0,0.1); margin-bottom: 15px;
         }
 
-        /* Perigos do Email */
-        .danger-zone {
-            background: #ff4545;
-            color: white;
+        .file-header h1 {
+            font-family: 'Teko', sans-serif; font-size: 6rem;
+            text-transform: uppercase; line-height: 0.8; position: relative;
+        }
+
+        .file-header h1::before, .file-header h1::after {
+            content: "EMAIL_PROT";
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8;
+        }
+        .file-header h1::after { color: var(--glitch-red); z-index: -1; animation: text-glitch 2.5s infinite linear alternate-reverse; left: 2px; }
+        .file-header h1::before { color: var(--glitch-blue); z-index: -2; animation: text-glitch 3s infinite linear alternate-reverse; left: -2px; }
+
+        /* =================== HERO VISUAL =================== */
+        .hero-section {
+            max-width: 1300px; margin: -60px auto 80px auto; padding: 0 5%;
+            z-index: 10; position: relative;
+            animation: fadeUp 0.8s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        .hero-banner {
+            height: 350px;
+            /* Imagem de Rede/Dados */
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://s2-techtudo.glbimg.com/GrUxdLdolBdn7_ugvb08UO9t6lg=/600x0/filters:quality(50)/https://i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2024/8/x/jttoeBSbyeKJAIZJYyPg/gmail-google-logo-rebrand-workspace-design-dezeen-2364-col-0.webp');
+            background-size: cover; background-position: center;
+            border: 4px solid var(--zzz-yellow);
+            clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+            animation: hero-cycle 10s infinite alternate;
+        }
+
+        /* =================== CONTEÚDO =================== */
+        main { padding: 0 5% 100px 5%; max-width: 1300px; margin: auto; }
+
+        section { 
+            margin-bottom: 120px; 
+            opacity: 0; 
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+        }
+        section:nth-of-type(1) { animation-delay: 0.4s; }
+        section:nth-of-type(2) { animation-delay: 0.6s; }
+        section:nth-of-type(3) { animation-delay: 0.8s; }
+
+        h2 {
+            font-family: 'Teko', sans-serif; font-size: 4rem;
+            text-transform: uppercase; border-left: 15px solid var(--zzz-yellow);
+            padding-left: 25px; margin-bottom: 40px; color: var(--zzz-white);
+        }
+        h2 span { font-size: 1.5rem; color: var(--zzz-yellow); vertical-align: middle; margin-left: 10px; }
+
+        p { margin-bottom: 20px; color: #ccc; font-size: 1.15rem; text-align: justify; }
+
+        /* === ESTRUTURA DE EMAIL (TERMINAL STYLE) === */
+        .terminal-box {
+            background: var(--zzz-dark-grey);
+            border: 1px solid var(--zzz-grey);
             padding: 30px;
-            margin: 50px 0;
+            font-family: 'Inter', monospace;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%);
+            border-left: 4px solid var(--zzz-yellow);
+        }
+        
+        .term-row {
+            display: flex; border-bottom: 1px solid #333; padding: 15px 0; align-items: center;
+        }
+        .term-label {
+            color: var(--zzz-yellow); font-family: 'Teko'; font-size: 1.5rem; width: 100px;
+        }
+        .term-data { color: #fff; font-family: monospace; letter-spacing: 1px;}
+
+        /* === CARDS DE NETIQUETA === */
+        .sw-card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+        
+        .sw-card {
+            background: var(--zzz-dark-grey); 
+            padding: 0;
+            border-bottom: 4px solid var(--zzz-grey);
+            transition: 0.3s; 
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%);
+            display: flex; flex-direction: column;
+        }
+        
+        .sw-card-img {
+            width: 100%; height: 180px; object-fit: cover;
+            border-bottom: 2px solid var(--zzz-yellow);
+            filter: grayscale(100%) contrast(1.2); transition: 0.4s;
+        }
+
+        .sw-card-content { padding: 25px; }
+        .sw-card:hover { background: var(--zzz-grey); border-bottom-color: var(--zzz-yellow); transform: translateY(-10px); }
+        .sw-card:hover .sw-card-img { filter: grayscale(0%) contrast(1); }
+
+        .sw-card h3 { font-family: 'Teko'; font-size: 2.2rem; color: var(--zzz-yellow); text-transform: uppercase; margin-bottom: 10px;}
+        
+        .tag {
+            display: inline-block; padding: 2px 10px; background: #000;
+            color: var(--zzz-yellow); font-family: 'Teko'; font-size: 1.1rem;
+            margin-right: 5px; border-radius: 2px; margin-top: 10px;
+        }
+
+        /* === AVISO DE PHISHING (DANGER) === */
+        .maintenance-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+        @media(min-width: 900px) { .maintenance-grid { grid-template-columns: 2fr 1fr; } }
+
+        .protocol-box {
+            background: var(--zzz-white); color: var(--zzz-black);
+            padding: 40px; clip-path: polygon(30px 0, 100% 0, 100% 100%, 0 100%, 0 30px);
+        }
+        
+        .warning-box {
+            background: var(--zzz-danger); color: white; padding: 30px;
+            font-weight: 800; text-transform: uppercase;
             clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+            box-shadow: 10px 10px 0px rgba(255, 69, 69, 0.2);
+            animation: text-glitch 3s infinite alternate-reverse;
+            display: flex; flex-direction: column; justify-content: center; text-align: center;
+            font-size: 1.5rem; font-family: 'Teko'; line-height: 1.2;
         }
 
+        /* Botão Voltar */
+        .btn-zone { text-align: center; margin: 100px 0; }
         .back-btn {
-            display: inline-block;
-            margin-top: 40px;
-            background: var(--zzz-white);
-            color: var(--zzz-black);
-            padding: 15px 45px;
-            text-decoration: none;
-            font-family: 'Teko', sans-serif;
-            font-size: 1.6rem;
-            font-weight: bold;
+            display: inline-block; padding: 20px 60px;
+            background: var(--zzz-yellow); color: var(--zzz-black);
+            text-decoration: none; font-family: 'Teko', sans-serif;
+            font-size: 2rem; font-weight: bold; text-transform: uppercase;
             clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+            transition: 0.4s;
         }
+        .back-btn:hover { background: var(--zzz-white); transform: scale(1.1); box-shadow: 0 0 30px var(--zzz-yellow); }
 
-        .back-btn:hover { background: var(--zzz-yellow); }
-
+        footer {
+            background: var(--zzz-black); color: #444; text-align: center;
+            padding: 50px; font-family: 'Teko'; border-top: 1px solid #111;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="comm-status">MESSAGE_ID // 404-SYNC-TRUE</div>
-    <h1>10. Correio Eletrónico</h1>
+<header class="file-header">
+    <div class="file-meta">
+        <span>[ NETWORK_COMM // UNID_10 ]</span>
+        <span>STATUS: ENCRYPTED</span>
+    </div>
+    <h1>EMAIL_PROT</h1>
+    <div style="font-family: 'Teko'; font-size: 1.5rem; opacity: 0.6;">/// CORREIO ELETRÓNICO & SEGURANÇA</div>
 </header>
+
+<div class="hero-section">
+    <div class="hero-banner"></div>
+</div>
 
 <main>
     <section>
-        <h2>Protocolo de Comunicação</h2>
-        <p>O <strong>Correio Eletrónico (Email)</strong> é uma ferramenta de comunicação assíncrona que permite o envio e receção de mensagens e ficheiros através da Internet. Diferente das apps de chat, o email é o padrão para comunicações oficiais, académicas e profissionais.</p>
+        <h2>Protocolo Base <span>[SMTP/IMAP]</span></h2>
+        <p>O <strong>Correio Eletrónico</strong> é a espinha dorsal da comunicação assíncrona moderna. Ao contrário do chat instantâneo, o email cria um registo oficial e estruturado, essencial para o mundo académico e corporativo.</p>
         
-        <div class="email-structure">
-            <div class="field-box"><span class="field-label">DE:</span> utilizador@exemplo.pt</div>
-            <div class="field-box"><span class="field-label">PARA:</span> destino@servidor.com</div>
-            <div class="field-box"><span class="field-label">ASSUNTO:</span> Título claro e objetivo da mensagem</div>
-            <p style="margin-top: 20px; color: #888; font-style: italic;">"O Assunto é a parte mais importante para garantir que a tua mensagem é lida."</p>
+        <div class="terminal-box">
+            <div style="font-family:'Teko'; font-size:1.5rem; margin-bottom:15px; border-bottom:1px solid #444;">/// HEADER STRUCTURE_</div>
+            <div class="term-row">
+                <span class="term-label">FROM:</span>
+                <span class="term-data">utilizador@origem.pt</span>
+            </div>
+            <div class="term-row">
+                <span class="term-label">TO:</span>
+                <span class="term-data">destinatario@servidor.com</span>
+            </div>
+            <div class="term-row">
+                <span class="term-label">SUBJECT:</span>
+                <span class="term-data">Assunto Claro e Objetivo [CRÍTICO]</span>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: #666;">// O campo "Assunto" determina a prioridade de leitura do recetor.</p>
         </div>
     </section>
-
-    
 
     <section>
-        <h2>Netiqueta: O Código de Conduta</h2>
-        <div class="etiquette-grid">
-            <div class="etiquette-card">
-                <h3>Clareza e Brevidade</h3>
-                <p>Escreve mensagens diretas. O tempo do destinatário é valioso. Usa parágrafos para separar ideias.</p>
+        <h2>Netiqueta: Código de Conduta <span>[RULES]</span></h2>
+        <div class="sw-card-container">
+            <div class="sw-card">
+                <img src="https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=2089&auto=format&fit=crop" alt="Code Clarity" class="sw-card-img">
+                <div class="sw-card-content">
+                    <h3>Clareza & Brevidade</h3>
+                    <p>Tempo é um recurso escasso. Escreve mensagens diretas, usando parágrafos curtos para separar ideias distintas.</p>
+                    <span class="tag">OBJETIVIDADE</span><span class="tag">TXT</span>
+                </div>
             </div>
-            <div class="etiquette-card">
-                <h3>CC vs BCC</h3>
-                <p>Usa <strong>CC</strong> (Com Conhecimento) para informar outros. Usa <strong>BCC</strong> (Cópia Oculta) para proteger a privacidade dos contactos.</p>
+            
+            <div class="sw-card">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop" alt="Network" class="sw-card-img">
+                <div class="sw-card-content">
+                    <h3>CC vs BCC</h3>
+                    <p>Usa <strong>CC</strong> para transparência. Usa <strong>BCC</strong> (Cópia Oculta) para proteção de dados e privacidade em massa.</p>
+                    <span class="tag">PRIVACIDADE</span><span class="tag">PROT</span>
+                </div>
             </div>
-            <div class="etiquette-card">
-                <h3>Anexos</h3>
-                <p>Verifica sempre o tamanho dos ficheiros. Se forem muito pesados, usa links de nuvem (Drive/OneDrive).</p>
+
+            <div class="sw-card">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop" alt="Data" class="sw-card-img">
+                <div class="sw-card-content">
+                    <h3>Anexos</h3>
+                    <p>Verifica o payload. Para ficheiros pesados, opta sempre por links de Cloud (Drive/OneDrive) em vez de anexos.</p>
+                    <span class="tag">CLOUD</span><span class="tag">UPLOAD</span>
+                </div>
             </div>
         </div>
     </section>
-
-    
 
     <section>
-        <div class="danger-zone">
-            <h3 style="font-family: 'Teko'; font-size: 2.2rem; margin-bottom: 10px;">ALERTA DE SEGURANÇA: PHISHING</h3>
-            <p>Nunca cliques em links ou descarregues anexos de emails suspeitos. O <strong>Phishing</strong> é uma técnica usada por piratas informáticos para roubar palavras-passe fingindo ser uma entidade oficial (como um banco ou a escola).</p>
+        <h2>Segurança & Organização <span>[WARNING]</span></h2>
+        <div class="maintenance-grid">
+            <div class="protocol-box">
+                <h4 style="font-family:'Teko'; font-size:2rem; text-transform:uppercase; margin-bottom:20px; border-bottom:2px solid black;">Gestão de Inbox</h4>
+                <ul style="list-style:none;">
+                    <li style="margin-bottom:10px; font-weight:bold;">► Usar Etiquetas (Labels) para categorização.</li>
+                    <li style="margin-bottom:10px; font-weight:bold;">► Criar Filtros Automáticos para spam.</li>
+                    <li style="margin-bottom:10px; font-weight:bold;">► Meta: Inbox Zero (Processar tudo).</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                ⚠ ALERTA PHISHING<br>
+                <span style="font-size:1rem; font-family:'Inter'; font-weight:400; margin-top:10px; text-transform:none;">
+                    Links suspeitos detetados?
+                    Nunca introduzas passwords.
+                    Verifica o remetente.
+                </span>
+            </div>
         </div>
-
-        <h2>Organização de Arquivo</h2>
-        <p>Para uma produtividade máxima, utiliza <strong>Etiquetas (Labels)</strong> e <strong>Pastas</strong>. Manter a "Inbox Zero" (caixa de entrada vazia) ajuda a garantir que nenhuma tarefa importante fica esquecida no meio do Spam.</p>
     </section>
 
-    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    <div class="btn-zone">
+        <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    </div>
 </main>
 
 <footer>
-    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
-        MAIL_SERVICE_V2 // TRANSMISSÃO_CONCLUÍDA
-    </div>
+    MAIL_PROTOCOL_V2 // 2026 // SECURE CONNECTION // [EOF]
 </footer>
 
 </body>
