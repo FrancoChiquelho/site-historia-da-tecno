@@ -4,99 +4,153 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Processamento de Texto | Protocolo de Edição</title>
+   
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
+        /* =================== CONFIGURAÇÃO BASE =================== */
         :root {
             --zzz-yellow: #dbfd00;
             --zzz-black: #0a0a0a;
             --zzz-dark: #111;
             --zzz-white: #ffffff;
             --zzz-red: #ff3e3e;
+            --zzz-grey: #2b2b2b;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--zzz-black);
             color: var(--zzz-white);
             line-height: 1.6;
+            overflow-x: hidden;
+            /* Fundo Estilizado */
+            background-image: 
+                linear-gradient(rgba(10,10,10,0.96), rgba(10,10,10,0.96)),
+                repeating-linear-gradient(0deg, #111 0, #111 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, #111 0, #111 1px, transparent 1px, transparent 40px);
         }
 
+        /* Scanlines Effect */
+        body::after {
+            content: " ";
+            display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            z-index: 9990; pointer-events: none;
+        }
+
+        /* =================== ANIMAÇÕES =================== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* =================== HEADER =================== */
         header {
-            background: var(--zzz-black);
-            color: var(--zzz-yellow);
-            padding: 50px 10%;
-            border-bottom: 5px solid var(--zzz-yellow);
+            background: var(--zzz-yellow);
+            color: var(--zzz-black);
+            padding: 50px 10% 80px 10%;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+            border-bottom: 5px solid var(--zzz-white);
+            animation: fadeUp 0.8s ease-out;
             position: relative;
         }
 
-        header::after {
-            content: "DOC_PROCESSOR_V2";
-            position: absolute;
-            bottom: 10px;
-            right: 10%;
-            font-family: 'Teko';
-            font-size: 1.2rem;
-            opacity: 0.5;
+        .header-container {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .header-icon {
+            width: 80px; height: 80px;
+            background: var(--zzz-black);
+            padding: 12px;
+            clip-path: polygon(20% 0%, 100% 0%, 100% 80%, 80% 100%, 0% 100%, 0% 20%);
         }
 
         header h1 {
             font-family: 'Teko', sans-serif;
-            font-size: 4.5rem;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             text-transform: uppercase;
+            line-height: 0.8;
         }
 
+        /* =================== HERO VISUAL =================== */
+        .hero-section {
+            max-width: 1200px; margin: -50px auto 60px auto; padding: 0 5%;
+            z-index: 10; position: relative;
+        }
+
+        .hero-banner {
+            height: 300px;
+            background: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80') center/cover;
+            border: 4px solid var(--zzz-yellow);
+            clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+        }
+
+        /* =================== CONTEÚDO =================== */
         main {
-            padding: 60px 10%;
+            padding: 0 10% 100px 10%;
             max-width: 1200px;
             margin: auto;
         }
+
+        section { margin-bottom: 80px; animation: fadeUp 0.8s both; }
 
         h2 {
             font-family: 'Teko', sans-serif;
             font-size: 3rem;
             color: var(--zzz-yellow);
             text-transform: uppercase;
-            margin: 40px 0 20px;
+            margin-bottom: 25px;
+            border-left: 10px solid var(--zzz-yellow);
+            padding-left: 20px;
         }
 
-        /* Grid de Ferramentas de Formatação */
+        /* === GRID DE FERRAMENTAS === */
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
 
         .tool-box {
             background: var(--zzz-dark);
-            border: 1px solid #333;
-            padding: 25px;
+            border-bottom: 4px solid var(--zzz-grey);
             transition: 0.3s;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+            overflow: hidden;
         }
 
-        .tool-box:hover {
-            border-color: var(--zzz-yellow);
+        .tool-box:hover { 
+            transform: translateY(-10px); 
+            border-bottom-color: var(--zzz-yellow);
             background: #1a1a1a;
         }
 
+        .card-img {
+            width: 100%; height: 160px; object-fit: cover;
+            filter: grayscale(1); transition: 0.5s;
+        }
+        .tool-box:hover .card-img { filter: grayscale(0); }
+
+        .card-content { padding: 25px; }
+
         .tool-box h3 {
-            font-family: 'Teko';
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-family: 'Teko'; font-size: 1.8rem;
+            color: var(--zzz-yellow); margin-bottom: 10px;
+            text-transform: uppercase;
+            display: flex; align-items: center; gap: 10px;
         }
 
-        .tool-box h3::before {
-            content: "";
-            width: 10px;
-            height: 20px;
-            background: var(--zzz-yellow);
-        }
-
-        /* Secção de Boas Práticas */
+        /* === PROTOCOLO DE RIGOR (CAIXA BRANCA) === */
         .format-rules {
             background: var(--zzz-white);
             color: var(--zzz-black);
@@ -106,101 +160,120 @@
         }
 
         .format-rules h3 {
-            font-family: 'Teko';
-            font-size: 2.2rem;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            color: var(--zzz-red);
+            font-family: 'Teko'; font-size: 2.5rem;
+            text-transform: uppercase; margin-bottom: 20px;
+            color: var(--zzz-red); border-bottom: 3px solid var(--zzz-black);
         }
 
         .rule-item {
-            margin-bottom: 15px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
+            margin-bottom: 15px; border-bottom: 1px solid #ddd;
+            padding-bottom: 10px; font-weight: 500;
         }
 
-        .rule-item strong { text-transform: uppercase; }
+        .rule-item strong { text-transform: uppercase; color: var(--zzz-black); font-weight: 800; }
 
+        /* BOTÃO VOLTAR */
         .back-btn {
-            display: inline-block;
-            margin-top: 40px;
-            background: var(--zzz-yellow);
-            color: var(--zzz-black);
-            padding: 15px 45px;
-            text-decoration: none;
-            font-family: 'Teko', sans-serif;
-            font-size: 1.6rem;
-            font-weight: bold;
-            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+            display: inline-block; margin-top: 50px;
+            background: var(--zzz-yellow); color: var(--zzz-black);
+            padding: 15px 50px; text-decoration: none;
+            font-family: 'Teko', sans-serif; font-size: 1.8rem;
+            font-weight: bold; text-transform: uppercase;
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+            transition: 0.3s;
         }
+        .back-btn:hover { background: var(--zzz-white); transform: scale(1.05); }
 
-        .back-btn:hover { background: var(--zzz-white); }
-
+        footer {
+            background: var(--zzz-black); color: #444;
+            text-align: center; padding: 60px;
+            font-family: 'Teko'; border-top: 1px solid #111;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Processamento de Texto</h1>
+    <div class="header-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/2593/2593543.png" class="header-icon" alt="Text Icon">
+        <h1>Processamento de Texto</h1>
+    </div>
 </header>
+
+<div class="hero-section">
+    <div class="hero-banner"></div>
+</div>
 
 <main>
     <section>
         <h2>A Arte da Edição Digital</h2>
-        <p>O <strong>Processamento de Texto</strong> não é apenas escrever; é organizar ideias de forma visual e estruturada. Através destas ferramentas, podemos transformar rascunhos em documentos profissionais, relatórios técnicos ou guiões de missão.</p>
+        <p>O <strong>Processamento de Texto</strong> não é apenas escrever; é organizar ideias de forma visual e estruturada. Através destas ferramentas, transformamos rascunhos em documentos de elite.</p>
         
         <div class="tools-grid">
             <div class="tool-box">
-                <h3>Formatação de Caracteres</h3>
-                <p>Ajuste de fontes (tipos de letra), tamanhos, cores e estilos como <strong>Negrito</strong>, <em>Itálico</em> e <u>Sublinhado</u> para criar hierarquia visual.</p>
+                <img src="https://images.unsplash.com/photo-1512314889357-e157c22f938d?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Typography">
+                <div class="card-content">
+                    <h3>Caracteres</h3>
+                    <p>Controlo total sobre fontes, tamanhos e estilos (Negrito, Itálico).</p>
+                </div>
             </div>
+            
             <div class="tool-box">
-                <h3>Edição de Parágrafos</h3>
-                <p>Controlo de alinhamentos (Esquerda, Direita, Centrado e Justificado), espaçamentos entre linhas e avanços de texto.</p>
+                <img src="data:image/png;base64,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" class="card-img" alt="Paragraphs">
+                <div class="card-content">
+                    <h3>Parágrafos</h3>
+                    <p>Alinhamentos, espaçamentos e recuos para leitura dinâmica.</p>
+                </div>
             </div>
+            
             <div class="tool-box">
-                <h3>Estruturação Automática</h3>
-                <p>Criação de listas numeradas, marcas (bullet points) e índices automáticos baseados em estilos de título.</p>
+                <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Lists">
+                <div class="card-content">
+                    <h3>Estrutura</h3>
+                    <p>Listas, índices automáticos e organização por títulos.</p>
+                </div>
             </div>
+
             <div class="tool-box">
-                <h3>Inserção de Objetos</h3>
-                <p>Capacidade de incluir imagens, formas, tabelas e gráficos que complementam a informação textual.</p>
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Objects">
+                <div class="card-content">
+                    <h3>Objetos</h3>
+                    <p>Inserção de imagens, tabelas e gráficos para suporte visual.</p>
+                </div>
             </div>
         </div>
     </section>
-
-    
 
     <section>
         <div class="format-rules">
             <h3>Protocolos de Rigor Editorial</h3>
             <div class="rule-item">
-                <strong>Revisão Ortográfica:</strong> Nunca ignores as marcas vermelhas do sistema. Um documento com erros perde toda a autoridade.
+                <strong>Revisão:</strong> Nunca ignores as marcas vermelhas. Erros destroem a credibilidade.
             </div>
             <div class="rule-item">
-                <strong>Estilos de Título:</strong> Usa "Título 1", "Título 2", etc. Isto permite que o software gere índices automáticos instantaneamente.
+                <strong>Estilos:</strong> Usa Títulos (H1, H2) para gerar índices num clique.
             </div>
             <div class="rule-item">
-                <strong>Exportação (PDF):</strong> Para garantir que o formato não se altera em outros computadores, exporta sempre o ficheiro final em formato PDF.
+                <strong>Exportação:</strong> Ficheiro final deve ser sempre em <strong>PDF</strong> para preservar o layout.
             </div>
             <div class="rule-item">
-                <strong>Consistência:</strong> Não uses mais do que 2 ou 3 tipos de letra diferentes no mesmo documento para manter um aspeto limpo.
+                <strong>Consistência:</strong> Limita o uso a 2 fontes para um design profissional.
             </div>
         </div>
     </section>
 
     <section>
         <h2>Software de Elite</h2>
-        <p>Embora o <strong>Microsoft Word</strong> seja o padrão da indústria, existem alternativas poderosas como o <strong>Google Docs</strong> (para trabalho colaborativo em tempo real) e o <strong>LibreOffice Writer</strong> (uma excelente opção gratuita e de código aberto).</p>
+        <p>Usa as ferramentas certas para cada missão: <strong>MS Word</strong> para documentos complexos, <strong>Google Docs</strong> para colaboração em tempo real e <strong>LibreOffice</strong> para liberdade total.</p>
     </section>
 
-    <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    <div style="text-align: center;">
+        <a href="index.html" class="back-btn">← VOLTAR AO HUB</a>
+    </div>
 </main>
 
 <footer>
-    <div style="text-align:center; padding: 40px; color: #444; font-family: 'Teko'; font-size: 1.2rem;">
-        DOCUMENT_SYNC_COMPLETE // SYSTEM_OFFLINE
-    </div>
+    DOCUMENT_SYNC_COMPLETE // SYSTEM_V3 // 2026 // [EOF]
 </footer>
 
 </body>
