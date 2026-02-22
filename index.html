@@ -33,8 +33,7 @@ body {
   background-size: 20px 20px;
 }
 
-/* =================== EFEITO GLITCH (NOVO!) =================== */
-/* Animação de tremidela e cores RGB */
+/* =================== EFEITO GLITCH =================== */
 @keyframes text-glitch {
   0% { transform: skewX(-10deg); text-shadow: none; filter: none; }
   20% { transform: skewX(-15deg) translate(-5px, 2px); text-shadow: 3px 0 0 red, -3px 0 0 cyan; }
@@ -44,7 +43,7 @@ body {
   100% { transform: skewX(-10deg); text-shadow: 4px 4px 0 var(--zzz-black); filter: none; }
 }
 
-/* =================== EFEITO TV A LIGAR (LONGO) =================== */
+/* =================== EFEITO TV A LIGAR =================== */
 .tv-boot-overlay {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
@@ -53,7 +52,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Duração total aumentada para 3.5s */
   animation: tvBootSequence 3.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   pointer-events: none;
 }
@@ -63,21 +61,20 @@ body {
   height: 2px;
   background: var(--zzz-white);
   box-shadow: 0 0 30px var(--zzz-white), 0 0 50px var(--zzz-yellow);
-  /* A linha demora 3s a expandir */
   animation: tvLineExpand 3s ease-out forwards;
 }
 
 @keyframes tvBootSequence {
   0% { opacity: 1; background: #000; }
-  90% { opacity: 1; background: #000; } /* Fica preto mais tempo */
+  90% { opacity: 1; background: #000; }
   100% { opacity: 0; background: transparent; }
 }
 
 @keyframes tvLineExpand {
   0% { transform: scaleX(0); height: 1px; opacity: 0.5;}
   20% { transform: scaleX(0.2); height: 2px; opacity: 1; }
-  60% { transform: scaleX(1); height: 2px; } /* Mantém a linha horizontal */
-  70% { transform: scaleX(1); height: 8px; background: var(--zzz-yellow); } /* Flash amarelo antes de abrir */
+  60% { transform: scaleX(1); height: 2px; }
+  70% { transform: scaleX(1); height: 8px; background: var(--zzz-yellow); }
   100% { transform: scaleX(1); height: 100vh; opacity: 0; }
 }
 
@@ -99,7 +96,6 @@ nav {
   padding: 15px 40px;
   z-index: 1000;
   clip-path: polygon(0 0, 100% 0, 100% 80%, 98% 100%, 0 100%);
-  /* Delay de 3.2s para esperar a TV */
   animation: fadeUp 0.6s ease-out 3.2s backwards;
 }
 
@@ -114,7 +110,6 @@ nav h1 {
   transform: skewX(-10deg);
   font-weight: 700;
   box-shadow: 4px 4px 0 var(--zzz-black);
-  /* Aplica o Glitch assim que o menu aparece (aos 3.2s) */
   animation: text-glitch 0.5s steps(8) 3.2s;
 }
 
@@ -137,8 +132,7 @@ nav a:hover {
   transform: skewX(-10deg);
 }
 
-/* =================== FITA INFINITA (OTIMIZADA) =================== */
-/* Container que esconde o que sai fora da tela */
+/* =================== FITA INFINITA =================== */
 .marquee-container {
   position: absolute;
   top: 15vh;
@@ -154,14 +148,12 @@ nav a:hover {
   pointer-events: none;
 }
 
-/* O trilho que se move */
 .marquee-track {
   display: flex;
-  width: max-content; /* Permite que o conteúdo fique todo em linha, sem quebrar */
-  animation: scrollText 25s linear infinite; /* 'linear' para não haver soluços */
+  width: max-content;
+  animation: scrollText 25s linear infinite;
 }
 
-/* Cada bloco de texto (precisamos de dois iguais) */
 .marquee-content {
   display: flex;
   white-space: nowrap;
@@ -172,20 +164,13 @@ nav a:hover {
   font-size: 1.8rem;
   font-weight: 700;
   text-transform: uppercase;
-  padding: 0 40px; /* Espaçamento entre as frases */
+  padding: 0 40px;
   color: var(--zzz-black);
 }
 
-/* A animação mágica */
 @keyframes scrollText {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    /* Move exatamente 50% (o tamanho de um bloco inteiro) */
-    /* Quando chega aqui, o segundo bloco está na posição exata do primeiro, reiniciando o ciclo */
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 /* =================== HERO =================== */
@@ -205,7 +190,6 @@ nav a:hover {
 
 .hero-content {
   z-index: 2;
-  /* Delay de 3.2s para esperar a TV */
   animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 3.2s backwards;
 }
 
@@ -276,7 +260,6 @@ nav a:hover {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  /* Glitch também aqui, com delay de 3.5s */
   animation: text-glitch 0.5s steps(8) 3.5s;
 }
 .section-header span {
@@ -285,7 +268,6 @@ nav a:hover {
   letter-spacing: 2px;
 }
 
-/* CARD ZZZ */
 .card {
   position: relative;
   text-decoration: none;
@@ -383,171 +365,233 @@ body::after {
   z-index: 9990;
   pointer-events: none;
 }
+
+/* ========================================================= */
+/* ================= RESPONSIVIDADE (NOVO) ================= */
+/* ========================================================= */
+/* As regras abaixo entram em ação quando o ecrã tem 768px ou menos (telemóveis) */
+@media (max-width: 768px) {
+  
+  /* 1. Ajuste do Menu: Muda de linha para coluna e remove o corte (clip-path) que esconde texto */
+  nav {
+    flex-direction: column;
+    padding: 15px 10px;
+    clip-path: none; 
+  }
+  
+  /* 2. Ajuste do Título do Menu: Fica ligeiramente mais pequeno */
+  nav h1 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+  
+  /* 3. Ajuste da Fita Amarela: Baixamos um pouco para não chocar com o menu que agora é mais alto */
+  .marquee-container {
+    top: 22vh; 
+  }
+  .marquee-content span {
+    font-size: 1.2rem;
+  }
+
+  /* 4. Ajuste da Secção Principal (Hero): Mudamos a altura de fixa para automática e ajustamos letras */
+  .hero {
+    height: auto; /* Permite que o conteúdo dite a altura no telemóvel */
+    min-height: 100vh;
+    padding: 150px 5% 50px 5%; /* Dá mais espaço em cima para não chocar com o menu */
+  }
+  .hero h1 {
+    font-size: 3.5rem; /* O texto gigante diminui para caber no ecrã */
+  }
+  .hero p {
+    font-size: 1rem;
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  /* 5. Ajuste da Grelha de Cartões: Força a ficar tudo numa só coluna perfeita */
+  .container {
+    padding: 50px 20px;
+    grid-template-columns: 1fr; /* 1fr significa "1 coluna que ocupa o espaço todo" */
+    gap: 30px;
+  }
+  
+  /* 6. Ajuste do Cabeçalho da Base de Dados */
+  .section-header {
+    font-size: 2.5rem;
+    flex-direction: column; /* Coloca o "[LEVEL 01]" por baixo do título */
+  }
+
+  /* 7. Ajuste do Rodapé */
+  footer {
+    font-size: 1.2rem;
+    padding: 40px 15px;
+  }
+}
 </style>
 </head>
 <body>
 
 <div class="tv-boot-overlay">
-  <div class="tv-line"></div>
+    <div class="tv-line"></div>
 </div>
 
 <nav>
-  <h1>Histórias da Tecnologia</h1>
-  <div>
-    <a href="#topicos">Início</a>
-    <a href="#sobre">Base de Dados</a>
-  </div>
+    <h1>Histórias da Tecnologia</h1>
+    <div>
+        <a href="#topicos">Início</a>
+        <a href="#sobre">Base de Dados</a>
+    </div>
 </nav>
 
 <div class="hero" id="topicos">
-  <div class="marquee-container">
-    <div class="marquee-track">
-      <div class="marquee-content">
-        <span>/// SISTEMA INICIADO///</span>
-        <span>\BEM-VINDO AO CURSO/</span>
-        <span>\NOVO PROXY DETETADO/</span>
-        <span>\DOMINA A TECNOLOGIA/</span>
-        <span>\ACESSO CONCEDIDO/</span>
-      </div>
-      <div class="marquee-content">
-        <span>/// SISTEMA INICIADO///</span>
-        <span>\BEM-VINDO AO CURSO/</span>
-        <span>\NOVO PROXY DETETADO/</span>
-        <span>\DOMINA A TECNOLOGIA/</span>
-        <span>\ACESSO CONCEDIDO/</span>
-      </div>
+    <div class="marquee-container">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span>/// SISTEMA INICIADO///</span>
+                <span>\BEM-VINDO AO CURSO/</span>
+                <span>\NOVO PROXY DETETADO/</span>
+                <span>\DOMINA A TECNOLOGIA/</span>
+                <span>\ACESSO CONCEDIDO/</span>
+            </div>
+            <div class="marquee-content">
+                <span>/// SISTEMA INICIADO///</span>
+                <span>\BEM-VINDO AO CURSO/</span>
+                <span>\NOVO PROXY DETETADO/</span>
+                <span>\DOMINA A TECNOLOGIA/</span>
+                <span>\ACESSO CONCEDIDO/</span>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="hero-content">
-    <h1>Do Zero ao<br><span style="color:var(--zzz-yellow)">Domínio Digital</span></h1>
-    <p>Explora a história da informática e domina as ferramentas essenciais do dia a dia. Da estrutura do hardware às técnicas avançadas de software e produtividade, preparamos-te para enfrentar qualquer desafio tecnológico com dicas práticas e conhecimento especializado.</p>
-    <a href="#sobre" class="cta-button">Começar Missão →</a>
-  </div>
+    <div class="hero-content">
+        <h1>Do Zero ao<br><span style="color:var(--zzz-yellow)">Domínio Digital</span></h1>
+        <p>Explora a história da informática e domina as ferramentas essenciais do dia a dia. Da estrutura do hardware às técnicas avançadas de software e produtividade, preparamos-te para enfrentar qualquer desafio tecnológico com dicas práticas e conhecimento especializado.</p>
+        <a href="#sobre" class="cta-button">Começar Missão →</a>
+    </div>
 </div>
 
 <div class="container" id="sobre">
-  
-  <div class="section-header">
-    Base de Dados
-    <span>[LEVEL 01]</span>
-  </div>
-  
-  <a href="microinformatica.html" class="card" style="animation-delay: 3.5s">
-    <div class="card-inner">
-      <img src="https://jornalismodigitaletecnologia.wordpress.com/wp-content/uploads/2015/05/home1.png" alt="Microinformática">
-      <div class="content">
-        <h2>Microinformática</h2>
-        <p>Evolução histórica dos computadores e tecnologias digitais.</p>
-      </div>
+    
+    <div class="section-header">
+        Base de Dados
+        <span>[LEVEL 01]</span>
     </div>
-  </a>
+    
+    <a href="microinformatica.html" class="card" style="animation-delay: 3.5s">
+        <div class="card-inner">
+            <img src="https://jornalismodigitaletecnologia.wordpress.com/wp-content/uploads/2015/05/home1.png" alt="Microinformática">
+            <div class="content">
+                <h2>Microinformática</h2>
+                <p>Evolução histórica dos computadores e tecnologias digitais.</p>
+            </div>
+        </div>
+    </a>
 
-  <a href="ferramentas.html" class="card" style="animation-delay: 3.6s">
-    <div class="card-inner">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz9ezEa5UYwmu3te_E8mRruq9UPM7Ph8tWrw&s" alt="Ferramentas">
-      <div class="content">
-        <h2>Ferramentas</h2>
-        <p>Principais softwares na ótica do utilizador.</p>
-      </div>
-    </div>
-  </a>
+    <a href="ferramentas.html" class="card" style="animation-delay: 3.6s">
+        <div class="card-inner">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz9ezEa5UYwmu3te_E8mRruq9UPM7Ph8tWrw&s" alt="Ferramentas">
+            <div class="content">
+                <h2>Ferramentas</h2>
+                <p>Principais softwares na ótica do utilizador.</p>
+            </div>
+        </div>
+    </a>
 
-  <a href="hardware.html" class="card" style="animation-delay: 3.7s">
-    <div class="card-inner">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5b5iAIrQ4dAm1nGYryegoaKP8j7MMtnVb9A&s" alt="Hardware">
-      <div class="content">
-        <h2>Hardware</h2>
-        <p>Componentes físicos e arquitetura de computadores.</p>
-      </div>
-    </div>
-  </a>
+    <a href="hardware.html" class="card" style="animation-delay: 3.7s">
+        <div class="card-inner">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5b5iAIrQ4dAm1nGYryegoaKP8j7MMtnVb9A&s" alt="Hardware">
+            <div class="content">
+                <h2>Hardware</h2>
+                <p>Componentes físicos e arquitetura de computadores.</p>
+            </div>
+        </div>
+    </a>
 
-  <a href="software.html" class="card" style="animation-delay: 3.8s">
-    <div class="card-inner">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfbhTomKb_MxDJ1gQdfPWyd1wMg5nRqGX-Gg&s" alt="Software">
-      <div class="content">
-        <h2>Software</h2>
-        <p>Sistemas operativos e tipos de licenças.</p>
-      </div>
-    </div>
-  </a>
+    <a href="software.html" class="card" style="animation-delay: 3.8s">
+        <div class="card-inner">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfbhTomKb_MxDJ1gQdfPWyd1wMg5nRqGX-Gg&s" alt="Software">
+            <div class="content">
+                <h2>Software</h2>
+                <p>Sistemas operativos e tipos de licenças.</p>
+            </div>
+        </div>
+    </a>
 
-  <a href="processamento_texto.html" class="card" style="animation-delay: 3.9s">
-    <div class="card-inner">
-      <img src="https://media.licdn.com/dms/image/v2/D5612AQHpseDYBL8g1Q/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1689109350141?e=2147483647&v=beta&t=JablXeCfebD7yisFEnxoZXQYf-QpSYesmcLePPc_6VU" alt="Word">
-      <div class="content">
-        <h2>Processamento</h2>
-        <p>Técnicas de criação e formatação de documentos.</p>
-      </div>
-    </div>
-  </a>
+    <a href="processamento_texto.html" class="card" style="animation-delay: 3.9s">
+        <div class="card-inner">
+            <img src="https://media.licdn.com/dms/image/v2/D5612AQHpseDYBL8g1Q/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1689109350141?e=2147483647&v=beta&t=JablXeCfebD7yisFEnxoZXQYf-QpSYesmcLePPc_6VU" alt="Word">
+            <div class="content">
+                <h2>Processamento</h2>
+                <p>Técnicas de criação e formatação de documentos.</p>
+            </div>
+        </div>
+    </a>
 
-  <a href="folhas_calculo.html" class="card" style="animation-delay: 4.0s">
-    <div class="card-inner">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAB4gVUcKiRKK_u1QNUlGkbXY-MMp1kiBHuw&s" alt="Excel">
-      <div class="content">
-        <h2>Folhas de Cálculo</h2>
-        <p>Fórmulas, funções e análise de dados.</p>
-      </div>
-    </div>
-  </a>
-  
-   <a href="apresentacoes.html" class="card" style="animation-delay: 4.1s">
-    <div class="card-inner">
-      <img src="https://support.microsoft.com/images/pt-pt/e518ef5c-ab01-427e-9d55-e80712065809" alt="PowerPoint">
-      <div class="content">
-        <h2>Apresentações</h2>
-        <p>Técnicas de criação e apresentação de diapositivos.</p>
-      </div>
-    </div>
-  </a>
+    <a href="folhas_calculo.html" class="card" style="animation-delay: 4.0s">
+        <div class="card-inner">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAB4gVUcKiRKK_u1QNUlGkbXY-MMp1kiBHuw&s" alt="Excel">
+            <div class="content">
+                <h2>Folhas de Cálculo</h2>
+                <p>Fórmulas, funções e análise de dados.</p>
+            </div>
+        </div>
+    </a>
+    
+     <a href="apresentacoes.html" class="card" style="animation-delay: 4.1s">
+        <div class="card-inner">
+            <img src="https://support.microsoft.com/images/pt-pt/e518ef5c-ab01-427e-9d55-e80712065809" alt="PowerPoint">
+            <div class="content">
+                <h2>Apresentações</h2>
+                <p>Técnicas de criação e apresentação de diapositivos.</p>
+            </div>
+        </div>
+    </a>
 
-  <a href="armazenamento.html" class="card" style="animation-delay: 4.2s">
-    <div class="card-inner">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZNpVmCbNTGwN6ei30vyNNmRPftA4LJmJ24w&s" alt="Armazenamento">
-      <div class="content">
-        <h2>Armazenamento</h2>
-        <p>Fundamentos de armazenamento de dados e Cloud.</p>
-      </div>
-    </div>
-  </a>
+    <a href="armazenamento.html" class="card" style="animation-delay: 4.2s">
+        <div class="card-inner">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZNpVmCbNTGwN6ei30vyNNmRPftA4LJmJ24w&s" alt="Armazenamento">
+            <div class="content">
+                <h2>Armazenamento</h2>
+                <p>Fundamentos de armazenamento de dados e Cloud.</p>
+            </div>
+        </div>
+    </a>
 
-  <a href="internet.html" class="card" style="animation-delay: 4.3s">
-    <div class="card-inner">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN3ulpJCI9DTbhGos3Mi8_runAs42Pk0nwtg&s" alt="Internet">
-      <div class="content">
-        <h2>Internet</h2>
-        <p>Utilização segura da internet e pesquisa online.</p>
-      </div>
-    </div>
-  </a>
+    <a href="internet.html" class="card" style="animation-delay: 4.3s">
+        <div class="card-inner">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN3ulpJCI9DTbhGos3Mi8_runAs42Pk0nwtg&s" alt="Internet">
+            <div class="content">
+                <h2>Internet</h2>
+                <p>Utilização segura da internet e pesquisa online.</p>
+            </div>
+        </div>
+    </a>
 
-  <a href="email.html" class="card" style="animation-delay: 4.4s">
-    <div class="card-inner">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDtTZEQ6BIdru7iWN5OtLSiSYV7sp6K5qCxA&s" alt="Email">
-      <div class="content">
-        <h2>Email</h2>
-        <p>Utilização de correio eletrónico e boas práticas.</p>
-      </div>
-    </div>
-  </a>
+    <a href="email.html" class="card" style="animation-delay: 4.4s">
+        <div class="card-inner">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDtTZEQ6BIdru7iWN5OtLSiSYV7sp6K5qCxA&s" alt="Email">
+            <div class="content">
+                <h2>Email</h2>
+                <p>Utilização de correio eletrónico e boas práticas.</p>
+            </div>
+        </div>
+    </a>
 
-  <a href="impressoras.html" class="card" style="animation-delay: 4.5s">
-    <div class="card-inner">
-      <img src="https://i.gdm.net.br/2024/07/09165448/melhores-impressoras.jpg" alt="Impressoras">
-      <div class="content">
-        <h2>Impressoras</h2>
-        <p>Manuseamento, tipos e cuidados com impressoras.</p>
-      </div>
-    </div>
-  </a>
+    <a href="impressoras.html" class="card" style="animation-delay: 4.5s">
+        <div class="card-inner">
+            <img src="https://i.gdm.net.br/2024/07/09165448/melhores-impressoras.jpg" alt="Impressoras">
+            <div class="content">
+                <h2>Impressoras</h2>
+                <p>Manuseamento, tipos e cuidados com impressoras.</p>
+            </div>
+        </div>
+    </a>
 
 </div>
 
 <footer>
-  <p>© 2026 Curso de Programador // Francisco Chiquelho</p>
-  <span>TURMA: 1ºPI // SYSTEM STATUS: NORMAL</span>
+    <p>© 2026 Curso de Programador // Francisco Chiquelho</p>
+    <span>TURMA: 1ºPI // SYSTEM STATUS: NORMAL</span>
 </footer>
 
 </body>
